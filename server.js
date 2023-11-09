@@ -16,5 +16,5 @@ app.get('/about', function(req, res) {
   res.render('pages/about');
 });
 
-app.listen(3300);
-console.log('Server is listening on port 3300');
+app.listen(4000);
+console.log('Server is listening on port 4000');
