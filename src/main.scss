@@ -1,0 +1,23 @@
+// Custom.scss
+// Option A: Include all of Bootstrap
+
+// Include any default variable overrides here (though functions won't be available)
+
+// $primary: red; 
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+// Then add additional custom code here
+
+//login page
+.gradient-custom-2 {
+    background: #0093d0;
+    // background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+    // background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+}
+.btn-block {
+    --mdb-btn-margin-top: 0.5rem;
+    /* display: block; */
+    width: 100%;
+}
+
+//inner main page
