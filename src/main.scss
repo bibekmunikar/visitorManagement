@@ -3,16 +3,24 @@
 
 // Include any default variable overrides here (though functions won't be available)
 
-// $primary: red; 
+$primary: red; 
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+@import url('../node_modules/font-awesome/css/font-awesome.min.css'); 
 
 // Then add additional custom code here
 
 //login page
 .gradient-custom-2 {
     background: #0093d0;
+    border: 1px solid #0093d0;
+    color: #ffffff;
     // background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
     // background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+}
+a.gradient-custom-2:hover {
+    color: #ffffff;
+
 }
 .btn-block {
     --mdb-btn-margin-top: 0.5rem;
