@@ -1,8 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <%- include('../partials/head'); %>
-</head>
+<%- include('../partials/head'); %>
 <body>
 
 
@@ -25,39 +21,40 @@
         <div class="row d-flex justify-content-center">
           <div class="col-lg-4">
             <h2 class="fw-bold mb-4">Register Now</h2>
-            <form>
+            <form action="/register" method="post">
               <!-- 2 column grid layout with text inputs for the first and last names -->
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col-md-6 mb-3">
                   <div class="form-outline">
-                    <input type="text" id="form3Example1" class="form-control" />
+                    <input type="text" name="username" placeholder="Username" id="username" class="form-control" />
                     <label class="form-label" for="form3Example1">First name</label>
                   </div>
                 </div>
                 <div class="col-md-6 mb-3">
                   <div class="form-outline">
-                    <input type="text" id="form3Example2" class="form-control" />
+                    <input type="password" name="password" placeholder="Password" id="password" class="form-control" />
                     <label class="form-label" for="form3Example2">Last name</label>
                   </div>
                 </div>
-              </div>
+              </div> -->
   
               <!-- Email input -->
               <div class="form-outline mb-3">
-                <input type="email" id="form3Example3" class="form-control" />
+                <input type="text" name="username" placeholder="Username" id="username" class="form-control" />
                 <label class="form-label" for="form3Example3">Email address</label>
               </div>
   
               <!-- Password input -->
               <div class="form-outline mb-3">
-                <input type="password" id="form3Example4" class="form-control" />
+                <input type="password" name="password" placeholder="Password" id="password"class="form-control" />
                 <label class="form-label" for="form3Example4">Password</label>
               </div>
   
               <!-- Submit button -->
-              <button type="submit" class="btn btn-primary btn-block mb-3">
+              <!-- <button type="submit" class="btn btn-primary btn-block mb-3">
                 Sign up
-              </button>
+              </button> -->
+              <input type="submit" value="Register">
               <a href="/">Sign In</a>
             </form>
           </div>

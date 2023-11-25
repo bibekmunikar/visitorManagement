@@ -10,7 +10,7 @@
             <a class="nav-link active" aria-current="page" href="/dashboard">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">My Visitors</a>
+            <a class="nav-link" href="/visitors">My Visitors</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Reporting</a>
@@ -37,16 +37,18 @@
             </span>
           </button>
           <ul class="pl-3" style="list-style:none;">
-            <li class="nav-item dropdown">
+            <li class="nav-item dropstart">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Bibek
               </a>
-              <ul class="dropdown-menu">
+              <ul class="dropdown-menu ">
                 <!-- <li><a class="dropdown-item" href="#">Action</a></li> -->
-                <li><a class="dropdown-item" href="#">Reporting</a></li>
+                <li><a class="dropdown-item" href="#">My Profile</a></li>
+                <li><a class="dropdown-item" href="/logout">Log out</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="/visitorcontrol">Sign In/Out Manager</a></li>
-                <li><a class="dropdown-item" href="#">Pre-Register Visitor</a></li>
+                <li class="mx-3"> Last Signed in: <span>23/11/2023 6:00PM</span></li>
+                <li><hr class="dropdown-divider"></li>
+                <li class="mx-3"> Current Timezone: Auckland <span>23/11/2023 2:00PM</span> </li>
               </ul>
             </li>
           </ul> 
