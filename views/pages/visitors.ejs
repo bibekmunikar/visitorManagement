@@ -7,6 +7,82 @@
             <span class="mx-4">Pre-Register a Visitors</span>
         </div>
     </section>
+    <section class="section-preregister">
+        <!-- Click on Modal Button -->
+        <button type="button" class="btn btn-primary mx-auto mt-3 text-light" data-bs-toggle="modal" data-bs-target="#modalForm">
+            Pre-register a visitor
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-light">
+                        <h3 class="modal-title" id="exampleModalLabel">Pre-register a visitor</h3>
+                        <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <h4 class="text-primary px-3 my-3">Visitor details</h4>
+                            <div class="row">
+                                <div class="mb-3 col">
+                                    <label class="form-label">Full Name <span>*</span></label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter the first and last name of visitor" />
+                                </div>
+                                <div class="mb-3 col">
+                                    <label class="form-label">From <span*</span></label>
+                                    <input type="text" class="form-control" id="from" name="from" placeholder="Visitor's compnay or organization" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col">
+                                    <label class="form-label">Visitor's email address</label>
+                                    <input type="text" class="form-control" id="email" name="email" placeholder="Enter the visitor's email address" />
+                                </div>
+                                <div class="mb-3 col">
+                                    <label class="form-label">Mobile number <span>*</span></label>
+                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="phone" />
+                                </div>
+                            </div>
+                            <h4 class="text-primary px-3 my-3">Event details</h4>
+                            <div class="mb-3">
+                                <label class="form-label">Visiting employee</label>
+                                <select class="form-control" id="employee_name">
+                                    <option>Bibek</option>
+                                    <option>Soumiya</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                  </select>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col">
+                                    <label class="form-label">Date and start time <span>*</span></label>
+                                    <input type="text" class="form-control" id="startdate" name="startdate" placeholder="Start Date" />
+                                </div>
+                                <div class="mb-3 col">
+                                    <label class="form-label">Date and end time <span>*</span></label>
+                                    <input type="text" class="form-control" id="enddate" name="enddate" placeholder="End Date" />
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Message for Sign In/Out Manager</label>
+                                <textarea class="form-control" id="message" name="message" placeholder="Message" rows="3"/></textarea>
+                            </div>
+                            <!-- <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberMe" />
+                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                            </div> -->
+                            <div class="modal-footer">
+                                <!-- <p class="float-start">Close</p> -->
+                                <button type="submit" class="btn btn-primary text-light">Close</button>
+                                <button type="submit" class="btn btn-warning text-light ">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <%- include('../partials/footer'); %>
 </body>
 </html>

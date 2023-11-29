@@ -3,7 +3,7 @@
 
 // Include any default variable overrides here (though functions won't be available)
 
-$primary: red; 
+$primary: #0093d0; 
 @import "../node_modules/bootstrap/scss/bootstrap";
 
 @import url('../node_modules/font-awesome/css/font-awesome.min.css'); 
@@ -29,3 +29,26 @@ a.gradient-custom-2:hover {
 }
 
 //inner main page
+.page-header h1{font-size: 2rem;display: inline-flex;}
+.page-header span{position: relative;}
+.page-header span:before {
+    content: '';
+    width: 0;
+    height: 20px;
+    position: absolute;
+    border: 1px solid #eaeaea;
+    top: 0;
+    left: -15px;
+}
+
+//Modal form
+.section-preregister h4{position: relative;}
+.section-preregister h4::before{
+    content: "";
+    width: 3px;
+    height: 30px;
+    position: absolute;
+    border: 2px solid #c4bfbf;
+    top: 0;
+    left: 0;
+}
