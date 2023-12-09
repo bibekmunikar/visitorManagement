@@ -59,7 +59,7 @@ app.post('/auth', function(req, res) {
 //Register page
 app.get('/register', function(req, res) {
 	res.render('pages/register');
-  });
+});
 //CREATE USER
 app.post('/register', function(req, res) {
 	let username = req.body.username;
