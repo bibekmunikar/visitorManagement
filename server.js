@@ -16,8 +16,8 @@ app.set('view engine', 'ejs');
 
 app.use(session({
 	secret: 'yoursecret',
-	resave: true,
-	saveUninitialized: true
+	resave: false,
+	saveUninitialized: false
 }));
 
 app.use(express.json());
@@ -101,9 +101,31 @@ app.get('/visitorcontrol', function(req, res) {
   res.render('pages/visitorcontrol');
 });
 
-//register page
-app.get('/register', function(req, res) {
-  res.render('pages/register');
+//Departments page
+app.get('/departments', function(req, res) {
+  res.render('pages/departments');
+});
+
+//Adding Departments
+app.post('/departments', function(req, res, next) {
+	var department_name = req.body.department_name;
+	if (department_name) {
+		var sql = `INSERT INTO departments (department_name) VALUES ("${department_name}")`;
+		conn.query(sql, function(err, result) {
+			if (err) throw err;
+			console.log('record inserted');
+			res.render('pages/departments');
+		})
+	}
+	else {
+		// res.send('HELLO');
+		console.log("Error");
+	}
+});
+
+//Employees page
+app.get('/employees', function(req, res) {
+  res.render('pages/employees');
 });
 
 //Dashboard page
@@ -113,10 +135,7 @@ app.get('/dashboard', function(req, res) {
 
 
 
-// login page
-// app.get('/login', function(req, res) {
-//   res.render('pages/login');
-// });
+
 
 // about page
 // app.get('/about', function(req, res) {

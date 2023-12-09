@@ -1,0 +1,60 @@
+<%- include('../partials/head'); %>
+<body class="container-fluid">
+    <%- include('../partials/header'); %>
+    <section>
+        <div class="page-header">
+            <h1 class="text-primary">Departments</h1>
+            <!-- <span class="mx-4">Pre-Register a Visitors</span> -->
+        </div>
+    </section>
+    <section class="section-preregister">
+        <form action="/departments" method="post"> 
+            <div class="row my-3">
+                <div class="mb-3 col-4">
+                    <input type="text" class="form-control" id="department_name" name="department_name" placeholder="Add Department name" required/>
+                </div>
+                <div class="col-1">
+                    <input type="submit" value="Add" class="btn btn-primary btn-block text-light text-uppercase py-2 mb-3">
+                </div>
+            </div>
+            <!-- <div class="modal-footer"> -->
+               
+                <!-- <button type="submit" value="departments" class="btn btn-warning text-light ">Save</button> -->
+            <!-- </div> -->
+        </form>
+
+
+
+        <!-- Click on Modal Button -->
+        <!-- <button type="button" class="btn btn-primary mx-auto mt-3 text-light" data-bs-toggle="modal" data-bs-target="#modalForm">
+            Add Department
+        </button>
+        <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-light">
+                        <h3 class="modal-title" id="exampleModalLabel">Add Department Name</h3>
+                        <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/departments" method="post"> 
+                            <div class="row">
+                                <div class="mb-3 col">
+                                    <input type="text" class="form-control" id="department_name" name="department_name" placeholder="Add Department name" />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="departments" class="btn btn-primary btn-block text-light text-uppercase py-2 mb-3">
+
+                                <button type="submit" value="departments" class="btn btn-warning text-light ">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+    </section>
+    <%- include('../partials/footer'); %>
+</body>
+</html>
