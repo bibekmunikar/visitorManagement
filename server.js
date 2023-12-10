@@ -96,8 +96,12 @@ app.get('/dashboard', function (req, res, next) {
 });
 
 //Visitors 
-app.get('/visitors', function(req, res) {
+app.get('/visitors', function(req, res, next) {
+	if (req.session.loggedin) {
 	res.render('pages/visitors');
+} else {
+	res.redirect('/');
+}
 });
 
 //SignIn/Out Manager page
@@ -106,8 +110,12 @@ app.get('/visitorcontrol', function(req, res) {
 });
 
 //Departments page
-app.get('/departments', function(req, res) {
+app.get('/departments', function(req, res, next) {
+	if (req.session.loggedin) {
   res.render('pages/departments');
+} else {
+	res.redirect('/');
+}
 });
 
 //Adding Departments
@@ -128,18 +136,18 @@ app.post('/departments', function(req, res, next) {
 });
 
 //Employees page
-app.get('/employees', function(req, res) {
+app.get('/employees', function(req, res, next) {
+	if (req.session.loggedin) {
   res.render('pages/employees');
+} else {
+	res.redirect('/');
+}
 });
 
 //Dashboard page
-app.get('/dashboard', function(req, res) {
-  res.render('pages/dashboard');
-});
-
-
-
-
+// app.get('/dashboard', function(req, res) {
+//   res.render('pages/dashboard');
+// });
 
 // about page
 // app.get('/about', function(req, res) {
