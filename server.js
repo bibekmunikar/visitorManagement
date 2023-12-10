@@ -46,12 +46,12 @@ app.post('/auth', function(req, res) {
 				req.session.username = username;
 				res.redirect('dashboard');
 			} else {
-				res.send('Incorrect Username and/or Passworrrrd!');
+				res.send('Incorrect Username and/or Password!');
 			}			
 			res.end();
 		});
 	} else {
-		res.send('Please enter Username and Passworddddd!');
+		res.send('Please enter Username and Password!');
 		res.end();
 	}
 });
@@ -60,12 +60,17 @@ app.post('/auth', function(req, res) {
 app.get('/register', function(req, res) {
 	res.render('pages/register');
 });
+
 //CREATE USER
 app.post('/register', function(req, res) {
-	let username = req.body.username;
-	let password = req.body.password;
+	var firstname = req.body.firstname;
+	var lastname = req.body.lastname;
+	var email = req.body.email;
+	var phone = req.body.phone;
+	var username = req.body.username;
+	var password = req.body.password;
 	if (username && password) {
-		var sql = `INSERT INTO users (username, password) VALUES ("${username}", "${password}")`;
+		var sql = `INSERT INTO users (firstname, lastname, email, phone, username, password) VALUES ("${firstname}", "${lastname}", "${email}", "${phone}", "${username}", "${password}")`;
 		conn.query(sql, function(err, result) {
 			if (err) throw err;
 			console.log('record inserted');
@@ -83,8 +88,6 @@ app.get('/logout',(req,res) => {
     req.session.destroy();
     res.redirect('/');
 });
-
-
 
 // Users can access this if they are logged in
 app.get('/dashboard', function (req, res, next) {
@@ -145,9 +148,13 @@ app.get('/employees', function(req, res, next) {
 });
 
 //Dashboard page
-// app.get('/dashboard', function(req, res) {
-//   res.render('pages/dashboard');
-// });
+app.get('/dashboard', function(req, res) {
+  res.render('pages/dashboard');
+});
+
+
+
+
 
 // about page
 // app.get('/about', function(req, res) {
