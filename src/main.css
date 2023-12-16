@@ -11987,6 +11987,21 @@ textarea.form-control-lg {
   color: #ffffff;
 }
 
+.btn-design {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s, color 0.3s;
+  background-color: #3498db;
+  color: #ffffff;
+  border: 2px solid #3498db;
+}
+
 .btn-block {
   --mdb-btn-margin-top: 0.5rem;
   /* display: block; */

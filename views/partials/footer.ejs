@@ -1,9 +1,20 @@
 <footer>
     <p class="text-center text-muted">&copy; Copyright 2023 Soumya and Bibek</p>
 </footer>
+
+
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/dataTables.bootstrap5.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
 <script>
-   $(document).ready( function () {
-    $('#myTable').DataTable();
-} );
+  $(document).ready(function() {
+      new DataTable('#example');
+  });
 </script>
+<!-- <script type="module" src="/main.js"></script> -->
+
+
+
 
