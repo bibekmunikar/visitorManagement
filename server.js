@@ -50,7 +50,7 @@ app.use(express.static(__dirname + '/src'));
 // use res.render to load up an ejs view file
 
 // login page
-app.get('/', function(req, res) {
+app.get('/login', function(req, res) {
   res.render('pages/login');
 });
 
@@ -105,7 +105,7 @@ app.post('/register', function(req, res) {
   //USER LOGOUT
 app.get('/logout',(req,res) => {
     req.session.destroy();
-    res.redirect('/');
+    res.redirect('/login');
 });
 
 // Users can access this if they are logged in
@@ -184,48 +184,142 @@ app.post('/add_departments', function(req, res) {
 
 
 //Employees page
+// app.get('/employees', function(req, res) {
+//     if (req.session.loggedin) {
+//         const sql = 'SELECT employees.*, departments.department_name FROM employees LEFT JOIN departments ON employees.department_id = departments.department_id';
+        
+//         conn.query(sql, (err, data) => {
+//             if (err) {
+//                 console.error(err);
+//                 res.status(500).send('Internal Server Error');
+//                 return;
+//             }
+
+//             res.render('pages/employees', { employeesData: data });
+//         });
+//     } else {
+//         res.redirect('/');
+//     }
+// });
+
 app.get('/employees', function(req, res) {
-	if (req.session.loggedin) {
-		const sql = 'SELECT * FROM employees';
-		conn.query(sql, (err, data) => {
-		  if (err) throw err;
-		  console.log(data);
-		  res.render('pages/employees', { employeesData: data });
-		});
-	  } else {
-		res.redirect('/');
-	  }
+    if (req.session.loggedin) {
+        // const sql = 'SELECT * FROM employees';
+        const sql = 'SELECT employees.*, departments.department_name FROM employees LEFT JOIN departments ON employees.department_id = departments.id';
+        conn.query(sql, (err, data) => {
+            if (err) throw err;
+			// console.log(data);
+
+            // Fetch departments from the database
+            const departmentsQuery = 'SELECT * FROM departments';
+            conn.query(departmentsQuery, (err, departments) => {
+				// console.log(departments);
+                if (err) {
+                    console.error(err);
+                    res.status(500).send('Internal Server Error');
+                    return;
+                }
+
+                // Pass both employeesData and departments to the template
+                res.render('pages/employees', { employeesData: data, departments: departments });
+            });
+        });
+    } else {
+        res.redirect('/');
+    }
 });
 
 //Adding Employees
-app.post('/add_employees', upload.single('photo'), function(req, res) {
-	var full_name = req.body.full_name;
-	var alt_name = req.body.alt_name;
-	var email = req.body.email;
-	var mobile_number = req.body.mobile_number;
-	var department = req.body.department;
-	var job_title = req.body.job_title;
-	var emp_role_type = req.body.emp_role_type;
-	 // Access the file data using req.file
-	 var photo = req.file;
+app.post('/add_employees', function(req, res) {
+    if (req.session.loggedin) {
+        var full_name = req.body.full_name;
+        var alt_name = req.body.alt_name;
+        var email = req.body.email;
+        var mobile_number = req.body.mobile_number;
+        var job_title = req.body.job_title;
+        var emp_role_type = req.body.emp_role_type;
+		var department_id = req.body.department_id;
 
-	if (full_name && department) {
-		var sql = `INSERT INTO employees (full_name, alt_name, email, mobile_number, department, job_title, emp_role_type, photo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-	   conn.query(sql, [full_name, alt_name, email, mobile_number, department, job_title, emp_role_type, photo], function(err, result) {
-		  if (err) {
-			 console.error(err);
-			 res.status(500).send('Internal Server Error');
-		  } else {
-			 console.log('Record inserted');
-			 res.redirect('/employees');
-		  }
-	   });
-	} else {
-	   console.log("Error: Employee name is missing");
-	   res.status(400).send('Bad Request');
-	}
- });
+        if (full_name && email) {
+            // Assuming department_id is a foreign key in the employees table
+            var sql = `INSERT INTO employees (full_name, alt_name, email, mobile_number, job_title, emp_role_type, department_id) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+            
+            // Assuming department_id is passed as a parameter in the request body
+            // var department_id = req.body.department_id;
 
+            conn.query(sql, [full_name, alt_name, email, mobile_number, job_title, emp_role_type, department_id], function(err, result) {
+                if (err) {
+                    console.error(err);
+                    res.status(500).send('Internal Server Error');
+                } else {
+                    console.log('Record inserted');
+                    res.redirect('/employees');
+                }
+            });
+        } else {
+            console.log("Error: Employee name or email is missing");
+            res.status(400).send('Bad Request');
+        }
+    } else {
+        res.redirect('/');
+    }
+});
+
+
+// test star
+// app.post('/add_employees', function(req, res) {
+//     if (req.session.loggedin) {
+//         var full_name = req.body.full_name;
+//         var alt_name = req.body.alt_name;
+//         var email = req.body.email;
+//         var mobile_number = req.body.mobile_number;
+//         // Uncomment the following line if 'department' is part of the form data
+//         // var department = req.body.department;
+//         var job_title = req.body.job_title;
+//         // Uncomment the following line if 'emp_role_type' is part of the form data
+//         // var emp_role_type = req.body.emp_role_type;
+
+//         if (email) {
+//             // Uncomment the following lines if 'department' and 'emp_role_type' are part of the database schema
+//             // var sql = `INSERT INTO employees (full_name, alt_name, email, mobile_number, department, job_title, emp_role_type, photo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+//             // conn.query(sql, [full_name, alt_name, email, mobile_number, department, job_title, emp_role_type, photo], function(err, result) {
+
+//             // If 'department' and 'emp_role_type' are not part of the database schema, use the following line
+//             var sql = `INSERT INTO employees (full_name, alt_name, email, mobile_number, job_title) VALUES (?, ?, ?, ?, ?)`;
+            
+//             conn.query(sql, [full_name, alt_name, email, mobile_number, job_title], function(err, result) {
+//                 if (err) {
+//                     console.error(err);
+//                     res.status(500).send('Internal Server Error');
+//                 } else {
+//                     console.log('Record inserted');
+//                     res.redirect('/employees');
+//                 }
+//             });
+//         } else {
+//             console.log("Error: Employee name is missing");
+//             res.status(400).send('Bad Request');
+//         }
+//     } else {
+//         res.redirect('/');
+//     }
+// });
+// test end 
+
+
+
+ // Define a route to fetch data for the dropdown
+// app.get('/employees', (req, res) => {
+//   const query = 'SELECT id, department_name FROM departments';
+//   db.query(query, (err, results) => {
+//     if (err) {
+//       console.error('Error executing query:', err);
+//       return res.status(500).send('Internal Server Error');
+//     }
+//     // Render a template with the retrieved data
+//     res.render('employees', { departmentData: results });
+//   });
+// });
 
 //Dashboard page
 app.get('/dashboard', function(req, res) {
