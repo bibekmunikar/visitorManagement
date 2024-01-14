@@ -49,6 +49,100 @@ app.use(express.static(__dirname + '/src'));
 
 // use res.render to load up an ejs view file
 
+// Front end main page
+app.get('/', function(req, res) {
+	res.render('pages/index');
+});
+
+//Sign In Page
+app.get('/signin', (req, res) => {
+    // Display the list of visitors
+    conn.query('SELECT * FROM employees', (err, employees) => {
+        if (err) {
+            console.error('Error fetching employees:', err);
+            res.status(500).send('Internal Server Error');
+        } else {
+            res.render('pages/signin', { employees });
+        }
+    });
+});
+
+app.get("/autocomplete", (req, res) => {
+    const searchQuery = req.query.query;
+
+    if (!searchQuery) {
+        return res.status(400).json({ error: "Missing search query" });
+    }
+
+    const sql = "SELECT id, full_name FROM employees WHERE full_name LIKE ?";
+    const params = [`%${searchQuery}%`];
+
+    conn.query(sql, params, (err, results) => {
+        if (err) {
+            console.error("Error fetching autocomplete data:", err);
+            return res.status(500).json({ error: "Internal Server Error" });
+        }
+
+        res.json(results);
+    });
+});
+
+app.post('/checkin', (req, res) => {
+    const { name, from, email, phone, visiting_employee_id, health_safety } = req.body;
+
+    // Validate required fields
+    if (!name || !phone) {
+        return res.status(400).send('Name and phone are required');
+    }
+
+    // Assuming the 'visitors' table has columns: name, from, email, phone, visiting_employee_id, health_safety
+    const sql = `INSERT INTO visitors (name, \`from\`, email, phone, visiting_employee_id, health_safety) VALUES (?, ?, ?, ?, ?, ?)`;
+
+    conn.query(sql, [name, from, email, phone, visiting_employee_id, health_safety], (err, result) => {
+        if (err) {
+            console.error('Error inserting visitor data:', err);
+            return res.status(500).send('Error inserting visitor data');
+        }
+
+        console.log('Visitor data inserted successfully');
+        res.redirect('/');
+    });
+});
+
+
+
+// app.post('/checkin', (req, res) => {
+//     // Handle visitor check-in
+//     var name = req.body.name;
+//     var from = req.body.from;
+//     var email = req.body.email;
+//     var phone = req.body.phone;
+//     var visiting_employee_id = req.body.visiting_employee_id;
+//     var health_safety = req.body.health_safety;
+
+//     var sql = `INSERT INTO visitors (name, from, email, phone, visiting_employee_id, health_safety) VALUES (?, ?, ?, ?, ?, ?)`;
+
+//     if (name && phone) {
+//         conn.query(sql, [name, from, email, phone, visiting_employee_id, health_safety], function (err, result) {
+//             if (err) {
+//                 console.error(err);
+//                 res.status(500).send('Internal Server Error');
+//             } else {
+//                 res.redirect('/');
+//             }
+//         });
+//     } else {
+//         res.status(400).send('Name and phone are required');
+//     }
+// });
+
+
+
+//SignOut page
+app.get('/signout', function(req, res) {
+	res.render('pages/signout');
+});
+
 // login page
 app.get('/login', function(req, res) {
   res.render('pages/login');
@@ -335,5 +429,5 @@ app.get('/dashboard', function(req, res) {
 //   res.render('pages/about');
 // });
 
-app.listen(3300);
-console.log('Server is listening on port 3300')
+app.listen(4000);
+console.log('Server is listening on port 4000')

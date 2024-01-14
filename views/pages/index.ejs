@@ -1,23 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <%- include('../partials/head'); %>
-</head>
-<body class="container">
-
-  <header>
-    <%- include('../partials/header'); %>
-  </header>
-  <main>
-    <div class="jumbotron">
-      <h1>This is great</h1>
-      <p>This is the description.</p>
+<%- include('../partials/head'); %>
+<body class="signin-section">
+    <div class="signIn_signOut">
+        <div class="row g-0 justify-content-center ">
+            <div class="vh-100 w-100 d-flex align-items-center" >
+                <div class="formContainer">
+                <div class="text-center mb-5 pb-3">
+                <img src="images/Atrax-Logo.png" alt="Atrax Group">
+                </div>
+                <div class="d-grid gap-2  my-3  d-md-flex">
+                    <a href="/signin" class="btn btn-success rounded-pill w-100 p-3 fs-5" type="button"> Sign In </a>
+                    <a href="/signout" class="btn btn-danger rounded-pill w-100 p-3 fs-5" type="button"> Sign Out </a>
+                </div>
+                    <p class="fw-bold">Welcome to the Atrax Group. Please Sign In/Sign Out </p>
+                </div>
+              </div>
+        </div>
     </div>
-  </main>
-
-<footer>
-  <%- include('../partials/footer'); %>
-</footer>
-
+<!-- <script src="js/script.js"></script>
+<script src="js/jquery.min.js"></script> -->
 </body>
 </html>
