@@ -115,40 +115,51 @@ $(document).ready(function () {
     });
 });
 
-const employeeSearchInput = document.getElementById("employeeSearch");
+
+//AUTOCOMPLETE SEARCH ON SIGNINconst employeeSearchInput = document.getElementById("employeeSearch");
 const employeeSuggestionsList = document.getElementById("employeeSuggestions");
+const visitingEmployeeIdInput = document.getElementById("visiting_employee_id");
 
 employeeSearchInput.addEventListener("input", debounce(handleEmployeeSearch, 300));
 
 function debounce(func, delay) {
-    let timeoutId;
-    return function () {
-        const context = this;
-        const args = arguments;
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => func.apply(context, args), delay);
-    };
+   let timeoutId;
+   return function () {
+      const context = this;
+      const args = arguments;
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => func.apply(context, args), delay);
+   };
 }
 
 function handleEmployeeSearch() {
-    const searchQuery = employeeSearchInput.value.trim();
+   const searchQuery = employeeSearchInput.value.trim();
 
-    if (searchQuery.length === 0) {
-        employeeSuggestionsList.innerHTML = ''; // Clear suggestions when the input is empty
-        return;
-    }
+   if (searchQuery.length === 0) {
+      employeeSuggestionsList.innerHTML = ''; 
+      return;
+   }
 
-    // Make a request to your backend API to fetch autocomplete suggestions
-    fetch(`/autocomplete?query=${searchQuery}`)
-        .then(response => response.json())
-        .then(data => {
-            // Update the datalist with autocomplete suggestions
-            employeeSuggestionsList.innerHTML = '';
-            data.forEach(employee => {
-                const option = document.createElement("option");
-                option.value = employee.full_name; // Assuming 'name' is the property containing the employee name
-                employeeSuggestionsList.appendChild(option);
-            });
-        })
-        .catch(error => console.error("Error fetching autocomplete data:", error));
+   fetch(`/autocomplete?query=${searchQuery}`)
+      .then(response => response.json())
+      .then(data => {
+         employeeSuggestionsList.innerHTML = '';
+         data.forEach(employee => {
+            const option = document.createElement("option");
+            option.value = employee.full_name;
+            employeeSuggestionsList.appendChild(option);
+         });
+      })
+      .catch(error => console.error("Error fetching autocomplete data:", error));
 }
+
+// Add an event listener to set the visiting_employee_id when an employee is selected
+employeeSuggestionsList.addEventListener("input", (event) => {
+   const selectedEmployee = data.find(employee => employee.full_name === event.target.value);
+   if (selectedEmployee) {
+      visitingEmployeeIdInput.value = selectedEmployee.id;
+   } else {
+      // Handle case when no employee is selected
+      visitingEmployeeIdInput.value = '';
+   }
+});
