@@ -456,7 +456,11 @@ app.post('/add_employees', function(req, res) {
 app.get('/dashboard', function(req, res) {
   res.render('pages/dashboard');
 });
-
+// login page
+app.get('/404', function(req, res) {
+    res.render('pages/404');
+  });
+  
 
 
 

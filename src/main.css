@@ -11977,6 +11977,26 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.modal-header {
+  background-color: #0093d0;
+}
+
+.btn-sample {
+  background-color: #ff6300 !important;
+  padding: 13px 15px !important;
+  text-transform: uppercase;
+  font-weight: 500 !important;
+  border-radius: 0 !important;
+}
+
+.btn-orange {
+  color: #ff6300 !important;
+}
+
+.active > .page-link {
+  background-color: #0093d0 !important;
+}
+
 .gradient-custom-2 {
   background: #0093d0;
   border: 1px solid #0093d0;
@@ -12057,6 +12077,26 @@ textarea.form-control-lg {
   text-align: justify;
 }
 
+a.btn-custom {
+  font-weight: 700;
+  color: #fff;
+  color: #ff6300;
+  font-size: 18px;
+}
+
+.big-text {
+  font-size: 200px;
+  font-weight: 700;
+  margin: 0;
+  color: #211b19;
+  text-transform: uppercase;
+}
+
+.dataTables_wrapper {
+  border: 2px solid #eaeaea;
+  padding: 30px 10px;
+}
+
 .section-preregister h4, .section-preregister .h4 {
   position: relative;
 }
@@ -12077,6 +12117,11 @@ textarea.form-control-lg {
 
 .signIn_signOut img {
   width: 300px;
+}
+
+.signout-section {
+  background-color: #f4f6fb;
+  margin-top: 4%;
 }
 
 #employeeSearch {
