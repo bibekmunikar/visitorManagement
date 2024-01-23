@@ -17,21 +17,25 @@
                     <img class="covid-image mb-5" src="images/Atrax-Logo.png">
                     <h2 class="fs-2 mb-3">Visitor's Form</h2>
                     <p class="fs-6">Please fill up the visitor form.</p>
+                    <a href="/" class="btn btn-warning rounded-pill w-50 p-3 mt-3 fs-6" type="button"> Go Back </a>
+
                     </div>
                 </div>
                 <!-- FORMS -->
-                <div class="col-lg-7 mx-0 px-0">
+                <div class="col-lg-8 mx-0 px-0">
                     <div class="progress">
                     <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 0%"></div>
                     </div>
                     <div id="qbox-container">
+
                     <form action="/checkin" method="post" name="form-wrapper" class="needs-validation" id="form-wrapper"  novalidate="">
+                    
                         <div id="steps-container">
                             <div class="step">
-                                <h4>Visitor Contact Information:</h4>
+                                <h4>Visitor's Sign In Information:</h4>
                                 <div class="mt-1">
                                 <label class="form-label">Full Name: <span>*</span></label> 
-                                <input class="form-control" id="name" name="name" type="text" placeholder="Enter the first and last name of visitor" required>
+                                <input class="form-control" id="name" name="name" type="text" placeholder="Enter the Full name of a visitor" required>
                                 </div>
                                 <div class="mt-2">
                                 <label class="form-label">From:</label> 
@@ -47,10 +51,10 @@
                                 </div>
                             </div>
                             <div class="step">
-                                <h4>Visit Options: Is the visitor visiting someone ?</h4>
+                                <h4>Is the visitor visiting someone ?</h4>
                                 <div class="mt-2">
                                     <label class="form-label">Visiting Employee:</label>
-                                    <input type="text" id="employeeSearch" name="employeeSearch" placeholder="Search employees" list="employeeSuggestionsList">
+                                    <input class="form-control" type="text" id="employeeSearch" name="employeeSearch" placeholder="Search employees" list="employeeSuggestionsList">
                                     <datalist id="employeeSuggestionsList"></datalist>
                                     <input type="hidden" id="employee_id" name="employee_id">
                                 </div>
@@ -62,9 +66,9 @@
                                 </div> -->
                             </div>
                             <div class="step">
-                                <h4>Health and Safety: Evacuation Assitance Required ?</h4>
+                                <h4>Health and Safety: Evacuation Assistance Required ?</h4>
                                 <div class="form-check ps-0 q-box">
-                                    <div class="q-box__question">
+                                    <div class="q-box__question"> 
                                         <input class="form-check-input question__input" id="hs_yes" name="q_2" type="radio" value="Yes">
                                         <label class="form-check-label question__label" for="hs_yes">Yes</label>
                                     </div>
@@ -101,9 +105,12 @@
                             <button id="submit-btn" type="submit">Submit</button>
                         </div>
                     </form>
+
                 </div>
                 </div>
             </div>
+            <!-- <div id="error-container"></div> -->
+
         </div>
         <div id="preloader-wrapper" >
             <div id="preloader"></div>

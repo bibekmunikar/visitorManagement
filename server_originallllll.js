@@ -91,11 +91,38 @@ app.get("/autocomplete", (req, res) => {
 app.post('/checkin', (req, res) => {
     const { name, from, email, phone, employee_id, q_2 } = req.body;
 
-    // Validate required fields
+    // // Validate required fields
+    // const errors = [];
+    // if (!name) {
+    //     errors.push('Name is required');
+    // }
+    // if (!phone) {
+    //     errors.push('Phone is required');
+    // }
+    // if (!employee_id) {
+    //     errors.push('Visiting employee is required');
+    // }
+
+    //   // If there are errors, render the form with error messages
+    //   if (errors.length > 0) {
+    //     return res.render('pages/signin', { errors, visitors: /* your employees data */ visitors });
+    // }
+
+
+    // if (!name || !phone || !employee_id || employee_id === '') {
+    //     return res.status(400).send('Name, phone, and visiting employee are required');
+    // }
+
     if (!name || !phone || !employee_id || employee_id === '') {
-        return res.status(400).send('Name, phone, and visiting employee are required');
+        const errors = ['Name, phone, and visiting employee are required'];
+        // return res.render('pages/signin', { errors, employees: [] });
     }
 
+   // Validate phone number using a regular expression
+//    const phoneRegex = /^\d{10}$/; // Assuming a 10-digit phone number
+//    if (!phoneRegex.test(phone)) {
+//        return res.status(400).send('Invalid phone number');
+//    }
     // Assuming the 'visitors' table has columns: name, from, email, phone, employee_id, health_safety
     const sql = `INSERT INTO visitors (name, \`from\`, email, phone, employee_id, health_safety) VALUES (?, ?, ?, ?, ?, ?)`;
 

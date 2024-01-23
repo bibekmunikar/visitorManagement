@@ -135,9 +135,16 @@ function debounce(func, delay) {
 function handleEmployeeSearch() {
     const searchQuery = employeeSearchInput.value.trim();
 
+     // Clear existing error messages
+     const errorContainer = document.getElementById("error-container");
+     errorContainer.innerHTML = '';
+
     if (searchQuery.length === 0) {
         employeeSuggestionsList.innerHTML = '';
         visitingEmployeeIdInput.value = ''; // Clear the hidden input value
+
+        // Display error message
+        // errorContainer.innerHTML = '<p>Name, phone, and visiting employee are required</p>';
         return;
     }
 
@@ -153,7 +160,11 @@ function handleEmployeeSearch() {
                 employeeSuggestionsList.appendChild(option);
             });
         })
-        .catch(error => console.error("Error fetching autocomplete data:", error));
+       .catch(error => {
+            console.error("Error fetching autocomplete data:", error);
+            // Display error message
+            errorContainer.innerHTML = '<p>Error fetching autocomplete data. Please try again.</p>';
+        });
 }
 
 // Add an event listener to set the selected employee ID into the hidden input
@@ -169,6 +180,27 @@ employeeSearchInput.addEventListener("blur", () => {
         console.error("Selected employee not found");
     }
 });
+// Inside your form submission event listener
+document.getElementById("submit-btn").addEventListener("click", function (event) {
+    if (!validateForm()) {
+        event.preventDefault(); // Prevent form submission if validation fails
+    }
+});
+
+function validateForm() {
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const employeeSearch = document.getElementById("employeeSearch").value;
+
+    if (!name || !phone || !employeeSearch) {
+        // Display error message or take appropriate action
+        alert("Name, phone, and visiting employee are required");
+        return false;
+    }
+
+    // Other validation logic, if needed
+    return true;
+}
 
 
 
