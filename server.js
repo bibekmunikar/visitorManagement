@@ -145,29 +145,44 @@ app.get('/signout', function(req, res) {
 
 // login page
 app.get('/login', function(req, res) {
-  res.render('pages/login');
+  res.render('pages/login', {errormessage:""});
 });
 
 app.post('/auth', function(req, res) {
-	let username = req.body.username;
-	let password = req.body.password;
-	if (username && password) {
-		conn.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
-			if (error) throw error;
-			if (results.length > 0) {
-				req.session.loggedin = true;
-				req.session.username = username;
-				res.redirect('dashboard');
-			} else {
-				res.send('Incorrect Username and/or Password!');
-			}			
-			res.end();
-		});
-	} else {
-		res.send('Please enter Username and Password!');
-		res.end();
-	}
+    let username = req.body.username;
+    let password = req.body.password;
+
+    if (!username || !password) {
+        // If either username or password is missing, render login page with error message
+        return res.render('pages/login', { errormessage: "Please enter Username and Password!" });
+    }
+
+    // Query to check if the user with the provided username exists
+    conn.query('SELECT * FROM users WHERE username = ?', [username], function(error, results, fields) {
+        if (error) throw error;
+
+        // If no user is found with the provided username, render login page with error message
+        if (results.length === 0) {
+            return res.render('pages/login', { errormessage: "Incorrect username" });
+        }
+
+        // Query to check if the user with the provided username and password exists
+        conn.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
+            if (error) throw error;
+
+            // If a matching user is found, set session variables and redirect to dashboard
+            if (results.length > 0) {
+                req.session.loggedin = true;
+                req.session.username = username;
+                return res.redirect('dashboard');
+            } else {
+                // If no matching user is found with the provided password, render login page with error message
+                return res.render('pages/login', { errormessage: "Incorrect password" });
+            }
+        });
+    });
 });
+
 
 //Register page
 app.get('/register', function(req, res) {
@@ -176,18 +191,21 @@ app.get('/register', function(req, res) {
 
 //CREATE USER
 app.post('/register', function(req, res) {
-	var firstname = req.body.firstname;
-	var lastname = req.body.lastname;
-	var email = req.body.email;
-	var phone = req.body.phone;
-	var username = req.body.username;
-	var password = req.body.password;
-	if (username && password) {
-		var sql = `INSERT INTO users (firstname, lastname, email, phone, username, password) VALUES ("${firstname}", "${lastname}", "${email}", "${phone}", "${username}", "${password}")`;
-		conn.query(sql, function(err, result) {
-			if (err) throw err;
+    var firstname = req.body.firstname;
+    var lastname = req.body.lastname;
+    var email = req.body.email;
+    var phone = req.body.phone;
+    var username = req.body.username;
+    var password = req.body.password;
+
+    if (username && password) {
+
+        var sql = "INSERT INTO users (firstname, lastname, email, phone, username, password) VALUES (?, ?, ?, ?, ?, ?)";
+        conn.query(sql, [firstname, lastname, email, phone, username, password], function(err, result) {
+
+            if (err) throw err;
 			console.log('record inserted');
-			res.render('pages/login');
+			res.render('pages/login', { errormessage: "Registration successful" });
 		})
 	}
 	else {
@@ -205,43 +223,101 @@ app.get('/logout',(req,res) => {
 // Users can access this if they are logged in
 app.get('/dashboard', function (req, res) {
 		if (req.session.loggedin) {
-    res.render('pages/dashboard');
+    res.render('pages/dashboard', {username:req.session.username});
 		} else {
 		res.redirect('/');
 	}
 });
 
-//Visitors 
+//Pre-registor Visitors page
 app.get('/visitors', function(req, res) {
-	if (req.session.loggedin) {
-	res.render('pages/visitors');
-} else {
-	res.redirect('/');
-}
+    if (req.session.loggedin) {
+        // const sql = 'SELECT * FROM visitors';
+        const sql = 'SELECT visitors.*, employees.full_name FROM visitors LEFT JOIN employees ON visitors.employees_id = employees.id';
+        conn.query(sql, (err, data) => {
+            if (err) throw err;
+			// console.log(data);
+
+            // Fetch employees from the database
+            const employeesQuery = 'SELECT * FROM employees';
+            conn.query(employeesQuery, (err, employees) => {
+				// console.log(employees);
+                if (err) {
+                    console.error(err);
+                    res.status(500).send('Internal Server Error');
+                    return;
+                }
+
+                // Pass both visitorsData and employees to the template
+                res.render('pages/visitors', { visitorsData: data, employees: employees, username:req.session.username });
+            });
+        });
+    } else {
+        res.redirect('/');
+    }
 });
+
+// Pre-registering a visitor
+app.post('/visitors', function(req, res) {
+	if (true) {
+	var visitors_full_name = req.body.visitors_full_name;
+	var fromCompany = req.body.fromCompany;
+	var email = req.body.email;
+	var mobile = req.body.mobile;
+	var employees_id = req.body.employees_id;
+	var date = req.body.date;
+	var start_time = req.body.start_time;
+	var end_time = req.body.end_time;
+	var message = req.body.message;
+	console.log(visitors_full_name);
+	
+		if (visitors_full_name) {
+
+		var sql = 'INSERT INTO visitors (visitors_full_name, fromCompany, email, mobile, employees_id, date, start_time, end_time, message) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+	   	conn.query(sql, [visitors_full_name, fromCompany, email, mobile, employees_id, date, start_time, end_time, message], function(err, result) {
+                if (err) {
+                    console.error(err);
+                    res.status(500).send('Internal Server Error');
+                } else {
+                    console.log('Record inserted');
+                    res.redirect('/visitors');
+                }
+            });
+        } else {
+            console.log("Error: Employee name or email is missing");
+            res.status(400).send('Bad Request');
+        }
+    } else {
+        res.redirect('/login');
+    }
+});
+
+//  Deleting record of Pre-registored Visitors 
+app.post('/delete_visitors', function(req, res) {
+	var visitors_id = req.body.visitors_id;
+	if (visitors_id) {
+	   var sql = 'Delete from visitors where id=?';
+	   conn.query(sql, [visitors_id], function(err, result) {
+		  if (err) {
+			 console.error(err);
+			 res.status(500).send('Internal Server Error');
+		  } else {
+			 console.log('Record deleted');
+			 res.redirect('/visitors');
+		  }
+	   });
+	} else {
+	   console.log("Error visitors name is missing");
+	   res.status(400).send('Bad Request');
+	}
+ });
+
 
 //SignIn/Out Manager page
 app.get('/visitorcontrol', function(req, res) {
   res.render('pages/visitorcontrol');
 });
 
-//Departments page
-// app.get('/departments', function(req, res) {
-// 	if (req.session.loggedin) {
-
-// 		const sql = 'SELECT * FROM departments';
-// 		conn.query(sql, (err, data) => {
-// 			console.log(data);
-// 			if (err) throw err;
-// 			res.render('departments', { departmentData: data });
-
-// 		});
-
-//   res.render('pages/departments');
-// } else {
-// 	res.redirect('/');
-// }
-// });
 
 app.get('/departments', function(req, res) {
 	if (req.session.loggedin) {
@@ -249,8 +325,10 @@ app.get('/departments', function(req, res) {
 	  conn.query(sql, (err, data) => {
 		if (err) throw err;
 		console.log(data);
-		res.render('pages/departments', { departmentData: data });
+		res.render('pages/departments', { departmentData: data, username:req.session.username });
 	  });
+
+      //   res.render('pages/departments');
 	} else {
 	  res.redirect('/');
 	}
@@ -277,25 +355,28 @@ app.post('/add_departments', function(req, res) {
  });
 
 
+ //  Deleting Department
+ app.post('/delete_department', function(req, res) {
+	var department_id = req.body.department_id;
+	if (department_id) {
+	   var sql = 'Delete from departments where id=?';
+	   conn.query(sql, [department_id], function(err, result) {
+		  if (err) {
+			 console.error(err);
+			 res.status(500).send('Internal Server Error');
+		  } else {
+			 console.log('Record deleted');
+			 res.redirect('/departments');
+		  }
+	   });
+	} else {
+	   console.log("Error: Department name is missing");
+	   res.status(400).send('Bad Request');
+	}
+ });
+
+
 //Employees page
-// app.get('/employees', function(req, res) {
-//     if (req.session.loggedin) {
-//         const sql = 'SELECT employees.*, departments.department_name FROM employees LEFT JOIN departments ON employees.department_id = departments.department_id';
-        
-//         conn.query(sql, (err, data) => {
-//             if (err) {
-//                 console.error(err);
-//                 res.status(500).send('Internal Server Error');
-//                 return;
-//             }
-
-//             res.render('pages/employees', { employeesData: data });
-//         });
-//     } else {
-//         res.redirect('/');
-//     }
-// });
-
 app.get('/employees', function(req, res) {
     if (req.session.loggedin) {
         // const sql = 'SELECT * FROM employees';
@@ -315,7 +396,7 @@ app.get('/employees', function(req, res) {
                 }
 
                 // Pass both employeesData and departments to the template
-                res.render('pages/employees', { employeesData: data, departments: departments });
+                res.render('pages/employees', { employeesData: data, departments: departments, username:req.session.username });
             });
         });
     } else {
@@ -358,6 +439,26 @@ app.post('/add_employees', function(req, res) {
         res.redirect('/');
     }
 });
+
+//  Deleting employees
+app.post('/delete_employees', function(req, res) {
+	var employees_id = req.body.employees_id;
+	if (employees_id) {
+	   var sql = 'Delete from employees where id=?';
+	   conn.query(sql, [employees_id], function(err, result) {
+		  if (err) {
+			 console.error(err);
+			 res.status(500).send('Internal Server Error');
+		  } else {
+			 console.log('Record deleted');
+			 res.redirect('/employees');
+		  }
+	   });
+	} else {
+	   console.log("Error: Employees name is missing");
+	   res.status(400).send('Bad Request');
+	}
+ });
 
 
 // test star
@@ -419,8 +520,6 @@ app.post('/add_employees', function(req, res) {
 app.get('/dashboard', function(req, res) {
   res.render('pages/dashboard');
 });
-
-
 
 
 

@@ -21,28 +21,31 @@
                         <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                    <form action="/visitors" method="post" >
                             <h4 class="text-primary px-3 my-3">Visitor's details</h4>
                             <div class="row">
                                 <div class="mb-3 col">
                                     <label class="form-label">Full Name <span>*</span></label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter the first and last name of visitor" />
+                                    <input type="text" class="form-control" id="visitors_full_name" name="visitors_full_name" placeholder="Enter the first and last name of visitor" />
                                 </div>
-                                <div class="mb-3 col">
-                                    <label class="form-label">From <span*</span></label>
-                                    <input type="text" class="form-control" id="from" name="from" placeholder="Visitor's company or organization" />
+								
+								<div class="mb-3 col">
+                                    <label class="form-label">From <span>*</span></label>
+                                    <input type="text" class="form-control" id="fromCompany" name="fromCompany" placeholder="Visitor's company or organization" />
                                 </div>
                             </div>
-                            <div class="row">
+							
+							<div class="row">
                                 <div class="mb-3 col">
                                     <label class="form-label">Visitor's email address</label>
                                     <input type="text" class="form-control" id="email" name="email" placeholder="Enter the visitor's email address" />
                                 </div>
                                 <div class="mb-3 col">
                                     <label class="form-label">Mobile number <span>*</span></label>
-                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" />
+                                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Phone" />
                                 </div>
-                            </div>
+							</div>
+							
                             <h4 class="text-primary px-3 my-3">Event's details</h4>
 
                             <div id="wrapper">
@@ -53,40 +56,37 @@
                               <p>
                               <input type="radio" name="yes_no">No</input>
                               </p>
-                              </div>
-                                  
-                                <div class="mb-3">
-                                <label class="form-label">Visiting employee</label>
-                                <select class="form-control" id="employee_name">
-                                    <option>Bibek</option>
-                                    <option>Soumiya</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                  </select>
                             </div>
+                                  
+                            <div class="mb-3">
+                                    <label class="form-label">Visiting employee</label>
+                                    <select class="form-control" id="employees_id" name="employees_id" required>
+                                        <option value="">Select Employee</option>
+                                            <% employees.forEach(function(employees) { %>
+                                                <option value="<%= employees.id %>"><%= employees.full_name %></option>
+                                            <% }); %>
+                                    </select>                        
+                            </div>
+
                             <div class="row">
                                 <div class="mb-3 col">
                                     <label class="form-label">Date <span>*</span></label>
-                                    <input type="date" class="form-control" id="startdate" name="startdate" placeholder="Start Date" />
+                                    <input type="date" class="form-control" id="date" name="date" placeholder="Start Date" />
                                 </div>
                                 <div class="mb-3 col">
                                     <label class="form-label">Start time <span>*</span></label>
-                                    <input type="time" class="form-control" id="starttime" name="starttime" placeholder="Start Time" />
+                                    <input type="time" class="form-control" id="start_time" name="start_time" placeholder="Start Time" />
                                 </div>
                                 <div class="mb-3 col">
                                     <label class="form-label">End time <span>*</span></label>
-                                    <input type="time" class="form-control" id="endtime" name="endtime" placeholder="End Time" />
+                                    <input type="time" class="form-control" id="end_time" name="end_time" placeholder="End Time" />
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Message for Sign In/Out Manager</label>
                                 <textarea class="form-control" id="message" name="message" placeholder="Message" rows="3"/></textarea>
                             </div>
-                            <!-- <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="rememberMe" />
-                                <label class="form-check-label" for="rememberMe">Remember me</label>
-                            </div> -->
+
                             <div class="modal-footer">
                                 <!-- <p class="float-start">Close</p> -->
                                 <button type="submit" class="btn btn-primary text-light">Close</button>
@@ -98,6 +98,72 @@
             </div>
         </div>
     </section>
+
+    
+   <!-- Showing result of the employees -->
+   <section class="table-employees">
+    <table id="example" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>S No.</th>
+                <th>Visitor Full Name</th>
+                <th>From</th>
+                <th>Email</th>
+                <th>Mobile Number</th>
+                <th>Visiting Employee</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Message</th>
+                <th>Action</th>
+                <th></th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <% if (visitorsData && visitorsData.length !== 0) { %>
+        <% visitorsData.forEach(function(data, index) { %>
+            <tr>
+
+            <form action="/delete_visitors" method="post">
+                <input type="hidden" id="visitors_id" name="visitors_id" value="<%=data.id%>" >
+
+                <td><%= index + 1 %></td>
+                <td><%- data.visitors_full_name %></td>
+                <td><%- data.fromCompany %></td>
+                <td><%- data.email %></td>
+                <td><%- data.mobile %></td>
+                <td><%- data.full_name %></td>
+                <td><%- data.date.toLocaleDateString() %></td>
+                <td><%- data.start_time %></td>
+                <td><%- data.end_time %></td>
+                <td><%- data.message %></td>
+                <td><button type="Submit" aria-label="Delete"> Delete </button></td>
+                <td><button type="Submit" aria-label="Update"> Update </button></td>
+           
+
+            </form>
+            </tr>
+
+            <% }); %>
+        <% } else { %>
+            <tr>
+                <td colspan="7">No Data Found</td>
+            </tr>
+        <% } %>
+        </tbody>
+    </table>
+</section>
+
+
     <%- include('../partials/footer'); %>
 </body>
 </html>
+
+<!-- <script>
+    function formatDate(dateString) {
+      const options = { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' };
+      const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
+      return formattedDate;
+    }
+  </script> -->

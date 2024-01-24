@@ -86,6 +86,7 @@
             </div>
         </div>
     </section>
+    <!-- Showing result of the employees -->
     <section class="table-employees">
         <table id="example" class="table table-striped" style="width:100%">
             <thead>
@@ -96,8 +97,9 @@
                     <th>Mobile Number</th>
                     <th>Department</th>
                     <th>Job Title</th>
-                    <th>User Role</th>
+                    <!-- <th>User Role</th> -->
                     <th>Action</th>
+                    <th></th>
                 </tr>
             </thead>
             
@@ -105,14 +107,22 @@
                 <% if (employeesData && employeesData.length !== 0) { %>
             <% employeesData.forEach(function(data, index) { %>
                 <tr>
+
+                <form action="/delete_employees" method="post">
+                    <input type="hidden" id="employees_id" name="employees_id" value="<%=data.id%>" >
+
                     <td><%= index + 1 %></td>
                     <td><%- data.full_name %></td>
                     <td><%- data.email %></td>
                     <td><%- data.mobile_number %></td>
                     <td><%- data.department_name %></td>
                     <td><%- data.job_title %></td>
-                    <td><%- data.emp_role_type %></td>
-                    <td></td>
+                    <!-- <td><%- data.emp_role_type %></td> -->
+                    <td><button type="Submit" aria-label="Delete"> Delete </button></td>
+                    <td><button type="Submit" aria-label="Update"> Update </button></td>
+                    
+                </form>
+
                 </tr>
                 <% }); %>
             <% } else { %>

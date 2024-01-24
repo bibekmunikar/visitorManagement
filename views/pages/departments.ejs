@@ -68,15 +68,25 @@
                         <th>S No.</th>
                         <th>Deparment Name</th>
                         <th>Action</th>
+                        <th></th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <% if (departmentData && departmentData.length !== 0) { %>
                         <% departmentData.forEach(function(data, index) { %>
                         <tr>
+                        
+                            <form action="/delete_department" method="post">
+                                <input type="hidden" id="department_id" name="department_id" value="<%=data.id%>" >
+
                             <td><%= index + 1 %></td>
                             <td><%= data.department_name %></td>
-                            <td></td>
+                            <td><button type="Submit" aria-label="Delete"> Delete </button></td>
+                            <td><button type="Submit" aria-label="Update"> Update </button></td>
+
+                            </form>
+                     
                         </tr>
                         <% }); %>
                     <% } else { %>
