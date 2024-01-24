@@ -4,11 +4,27 @@
 // Include any default variable overrides here (though functions won't be available)
 
 $primary: #0093d0; 
+
 @import "../node_modules/bootstrap/scss/bootstrap";
 // @import "/src/datatables.net-bs5";
 
 @import url('../node_modules/font-awesome/css/font-awesome.min.css'); 
-
+.modal-header {
+    background-color: #0093d0;
+}
+.btn-sample{
+    background-color: #ff6300 !important; 
+    padding: 13px 15px !important;
+    text-transform: uppercase;
+    font-weight: 500 !important;
+    border-radius: 0 !important;
+}
+.btn-orange{
+    color: #ff6300 !important;
+}
+.active>.page-link{
+    background-color: #0093d0 !important;
+}
 // Then add additional custom code here
 // body{
     // $font-family-base: Noto Sans, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -80,6 +96,30 @@ $primary: #0093d0;
 .section-login p{
     text-align: justify;
 }
+
+// 404 page
+a.btn-custom{
+    font-weight: 700;
+    color: #fff;
+    // padding: 13px 23px;
+    color: #ff6300;
+    font-size: 18px;
+}
+.big-text{
+    font-size: 200px;
+    font-weight: 700;
+    margin: 0;
+    color: #211b19;
+    text-transform: uppercase;
+}
+
+
+// dataTables css 
+.dataTables_wrapper{
+    border: 2px solid #eaeaea;
+    padding: 30px 10px;
+}
+
 //Modal form
 .section-preregister h4{position: relative;}
 .section-preregister h4::before{
@@ -100,7 +140,10 @@ $primary: #0093d0;
 .signIn_signOut img{
     width: 300px;
 }
-
+.signout-section{
+    background-color: #f4f6fb;
+    margin-top: 4%;
+}
 #employeeSearch {
     width: 300px; /* Set the desired width for your input field */
 }
