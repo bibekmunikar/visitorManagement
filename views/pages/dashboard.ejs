@@ -1,7 +1,123 @@
 <%- include('../partials/head'); %>
-<body class="container-fluid">
+<body>
     <%- include('../partials/header'); %>
   <main>
+    <div class="container-fluid">
+
+      <section class="section-dashboard my-4">
+        <div class="card">
+          <div class="card-header fs-4">
+            Dashboard
+          </div>
+          <div class="card-body">
+            <div class="row">
+
+              <div class="col-xl-3 col-md-6 mb-4">
+                  <div class="card border-left-primary shadow h-100 py-2">
+                      <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                              <div class="col mr-2">
+                                  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                      Today's Visitors</div>
+                                  <div class="h5 mb-0 font-weight-bold text-gray-800">4</div>
+                              </div>
+                              <div class="col-auto">
+                                  <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-xl-3 col-md-6 mb-4">
+                  <div class="card border-left-success shadow h-100 py-2">
+                      <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                              <div class="col mr-2">
+                                  <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                      Yesterday Visitors</div>
+                                  <div class="h5 mb-0 font-weight-bold text-gray-800">7</div>
+                              </div>
+                              <div class="col-auto">
+                                  <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-xl-3 col-md-6 mb-4">
+                  <div class="card border-left-info shadow h-100 py-2">
+                      <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                              <div class="col mr-2">
+                                  <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Last 7 Days Visitors
+                                  </div>
+                                  <div class="row no-gutters align-items-center">
+                                      <div class="col-auto">
+                                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">24</div>
+                                      </div>
+                                      <div class="col">
+                                          <div class="progress progress-sm mr-2">
+                                              <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-auto">
+                                  <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-xl-3 col-md-6 mb-4">
+                  <div class="card border-left-warning shadow h-100 py-2">
+                      <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                              <div class="col mr-2">
+                                  <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                      Total Visitors Till Date</div>
+                                  <div class="h5 mb-0 font-weight-bold text-gray-800">24</div>
+                              </div>
+                              <div class="col-auto">
+                                  <i class="fas fa-comments fa-2x text-gray-300"></i>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card my-4">
+            <div class="card-header fs-4">
+              Quicks Links
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Sign In Visitor's
+                  <span class="badge bg-sample rounded-pill">14</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Reporting
+                  <!-- <span class="badge bg-sample rounded-pill">2</span> -->
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Pre-register a Visitor's
+                  <!-- <span class="badge bg-sample rounded-pill">1</span> -->
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
   </main>
   <%- include('../partials/footer'); %>
 </body>

@@ -1,57 +1,9 @@
 <%- include('../partials/head'); %>
-<body class="container-fluid">
+<body>
     <%- include('../partials/header'); %>
+    <div class="container-fluid">
     
-    <div id="navbar-example">
-		<!-- Nav tabs -->
-		<ul class="nav nav-tabs" role="tablist">
-			<li class="nav-item">
-				<a class="nav-link active" data-toggle="tab" href="#visitors" role="tab">Visitors</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#employees" role="tab">Employees</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#contractors" role="tab">Contractors</a>
-			</li>
-		</ul>
-	
-		<!-- Tab panes {Fade}  -->
-		<div class="tab-content">
-			<div class="tab-pane fade in active" id="visitors" name="visitors" role="tabpanel">
-				<div class="bs-callout bs-callout-danger">
-					<h4>Visitors</h4>
-					<table class="table">
-						<tbody>
-							<tr>
-								<td><i class="fa fa-lg fa-check"></i> </td>
-								<td><b>Customer Service & Support</b></td>
-								<td><i class="fa fa-lg fa-check"></i> </td>
-								<td><b>Mission Planning Specialist</b></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		  <div class="tab-pane fade" id="profile" role="tabpanel">
-			  <div class="bs-callout bs-callout-danger" id="employees" name="employees">
-					<h4>Certifications</h4>
-					<table class="table">
-						<tbody>
-							<tr>
-								<td><b>CompTIA Security+ CE</b></td>
-								<td><b>2016</b></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="bs-callout bs-callout-danger" id="contractors" name="contractors">
-					<h4>Language and Platform Skills</h4>
-				</div>
-		  </div>
-		</div>
-	</div>
-
-	<%- include('../partials/footer'); %>
+    <%- include('../partials/footer'); %>
+</div>
 </body>
 </html>
