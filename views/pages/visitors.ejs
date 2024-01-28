@@ -26,20 +26,12 @@
                             <div class="row">
                                 <div class="mb-3 col">
                                     <label class="form-label">Full Name <span>*</span></label>
-<<<<<<< Updated upstream
                                     <input type="text" class="form-control" id="visitors_full_name" name="visitors_full_name" placeholder="Enter the first and last name of visitor" />
                                 </div>
 								
 								<div class="mb-3 col">
                                     <label class="form-label">From <span>*</span></label>
                                     <input type="text" class="form-control" id="fromCompany" name="fromCompany" placeholder="Visitor's company or organization" />
-=======
-                                    <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Enter the first and last name of visitor" />
-                                </div>
-                                <div class="mb-3 col">
-                                    <label class="form-label">From <span>*</span></label>
-                                    <input type="text" class="form-control" id="from_company" name="from_company" placeholder="Visitor's company or organization" />
->>>>>>> Stashed changes
                                 </div>
                             </div>
 							
@@ -64,7 +56,6 @@
                               <p>
                               <input type="radio" name="yes_no">No</input>
                               </p>
-<<<<<<< Updated upstream
                             </div>
                                   
                             <div class="mb-3">
@@ -77,19 +68,6 @@
                                     </select>                        
                             </div>
 
-=======
-                              </div>
-                                  
-                                <div class="mb-3">
-                                    <label class="form-label">Visiting employee</label>
-                                    <select class="form-control" id="employees_id" name="employees_id" required>
-                                            <option value="">Select Employee</option>
-                                            <% employees.forEach(function(employees) { %>
-                                                <option value="<%= employees.id %>"><%= employees.full_name %></option>
-                                            <% }); %>
-                                        </select>                        
-                                </div>
->>>>>>> Stashed changes
                             <div class="row">
                                 <div class="mb-3 col">
                                     <label class="form-label">Date <span>*</span></label>
@@ -160,7 +138,7 @@
                 <td><%- data.start_time %></td>
                 <td><%- data.end_time %></td>
                 <td><%- data.message %></td>
-                <td><button type="Submit" aria-label="Delete"> Delete </button></td>
+                <td><button onclick="return confirmdelete()" type="submit" aria-label="Delete">Delete</button></td>
                 <td><button type="Submit" aria-label="Update"> Update </button></td>
            
 
@@ -177,15 +155,16 @@
     </table>
 </section>
 
+<script>
+    function confirmdelete() {
+        // Display a confirmation dialog
+        let userConfirmed = confirm("Are you sure you want to delete?");
+        
+        // If the user confirms, submit the form for deletion
+        return userConfirmed;
+    }
+</script>
 
     <%- include('../partials/footer'); %>
 </body>
 </html>
-
-<!-- <script>
-    function formatDate(dateString) {
-      const options = { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' };
-      const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
-      return formattedDate;
-    }
-  </script> -->
