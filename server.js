@@ -378,48 +378,26 @@ app.post('/add_departments', function(req, res) {
  });
 
 
- // Updating Department
-app.post('/updateDepartments', function(req, res) {
-    const department_id = req.body.department_id;
-    const updated_department_name = req.body.updated_department_name;
-
-    if (department_id && updated_department_name) {
-        var sql = 'UPDATE departments SET department_name = ? WHERE id = ?';
-        conn.query(sql, [updated_department_name, department_id], function(err, result) {
-            if (err) {
-                console.error(err);
-                res.status(500).send('Internal Server Error');
-            } else {
-                console.log('Record updated');
-                res.redirect('/departments');
-            }
-        });
-    } else {
-        console.log("Error: Department ID or updated name is missing");
-        res.status(400).send('Bad Request');
-    }
+// Assuming you are rendering the updateDepartment.ejs template
+app.post('/update_department', (req, res) => {
+    const { id } = req.body;
+    // Fetch data for the specific department using department_id
+    db.query('SELECT * FROM departments WHERE id = ?', [id], (err, results) => {
+      if (err) throw err;
+      res.render('updateDepartment', { department: results[0] });
+    });
 });
 
-//  //  Updating Department
-//  app.post('/updateDepartments', function(req, res) {
-//     const department_id = req.body.department_id;
-// 	if (department_id) {
-// 	   var sql = 'Update from departments where id=?';
-// 	   conn.query(sql, [department_id], function(err, result) {
-// 		  if (err) {
-// 			 console.error(err);
-// 			 res.status(500).send('Internal Server Error');
-// 		  } else {
-// 			 console.log('Record updated');
-// 			 res.redirect('/departments');
-// 		  }
-// 	   });
-// 	} else {
-// 	   console.log("Error: Department name is missing");
-// 	   res.status(400).send('Bad Request');
-// 	}
-//  });
- 
+app.post('/save_update', (req, res) => {
+    const { id, new_department_name } = req.body;
+    // Update the department in the database
+    db.query('UPDATE departments SET department_name = ? WHERE id = ?', [new_department_name, id], (err) => {
+      if (err) throw err;
+      res.redirect('/departments');
+    });
+});
+
+
 
 //Employees page
 app.get('/employees', function(req, res) {

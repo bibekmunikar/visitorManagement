@@ -1,38 +1,12 @@
 <%- include('../partials/head'); %>
-<body>
+<body class="container-fluid">
     <%- include('../partials/header'); %>
-    <div class="container-fluid">
     <section>
         <div class="page-header">
             <h1 class="text-dark">Departments</h1>
         </div>
     </section>
 
-<<<<<<< Updated upstream
-         <!-- Click on Modal Button -->
-         <section class="section-department">
-            <button type="button" class="btn btn-sample mx-auto text-light btn-design" data-bs-toggle="modal" data-bs-target="#department_id">
-                Add Department
-            </button>
-            <div class="modal fade" id="department_id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header text-light">
-                            <h3 class="modal-title" id="exampleModalLabel">New Department</h3>
-                            <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="/add_departments" method="post">
-                                <div class="row">
-                                    <label class="form-label fw-bold">Add Department</label>
-                                    <div class="d-flex">
-                                        <div class="mb-3 col-md-8 col-sm-12">
-                                            <input type="text" class="form-control" id="department_name" name="department_name" placeholder="Department name" required/>
-                                        </div>
-                                        <div class="col-md-3 col-sm-5 d-flex mx-3">
-                                            <input type="submit" value="Add" class="btn btn-sample btn-block text-light text-uppercase mb-3">
-                                        </div>
-=======
     <!-- Click on Modal Button -->
     <section class="section-department my-3">
         <button type="button" class="btn btn-sample mx-auto text-light btn-design my-3" data-bs-toggle="modal" data-bs-target="#addDepartmentModal">
@@ -48,7 +22,7 @@
                         <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="/add_departments" method="post">
+                        <form id="addDepartmentForm" method="post" action="/add_departments">
                             <div class="row">
                                 <label class="form-label fw-bold">Add Department</label>
                                 <div class="d-flex">
@@ -56,8 +30,7 @@
                                         <input type="text" class="form-control" id="department_name" name="department_name" placeholder="Department name" required/>
                                     </div>
                                     <div class="col-md-3 col-sm-5 d-flex mx-3">
-                                        <input type="submit" value="Add" class="btn btn-sample btn-block text-light text-uppercase mb-3">
->>>>>>> Stashed changes
+                                        <button type="submit" class="btn btn-sample btn-block text-light text-uppercase mb-3">Add</button>
                                     </div>
                                 </div>
                             </div>
@@ -68,24 +41,6 @@
         </div>
     </section>
 
-<<<<<<< Updated upstream
-
-       
-
-       <!--    TABLE FOR DEPARTMENTS LIST   -->
-       <section class="section-table mt-3">
-            <table id="example" class="table table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>S No.</th>
-                        <th>Deparment Name</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% if (departmentData && departmentData.length !== 0) { %>
-                        <% departmentData.forEach(function(data, index) { %>
-=======
     <!-- TABLE FOR DEPARTMENTS LIST -->
     <section class="section-table my-4">
         <table id="example" class="table table-striped" style="width:100%">
@@ -100,32 +55,49 @@
             <tbody>
                 <% if (departmentData && departmentData.length !== 0) { %>
                     <% departmentData.forEach(function(data, index) { %>
->>>>>>> Stashed changes
                         <tr>
                             <td><%= index + 1 %></td>
                             <td><%= data.department_name %></td>
                             <td>
-<<<<<<< Updated upstream
-                                <button onclick="return confirmdelete()" type="submit" aria-label="Delete" class="btn btn-danger">Delete</button>
-                                <button type="Submit" aria-label="Update" class="btn btn-warning"> Update </button>
-                            </td>
-
-                            </form>
-                     
-=======
-                                <form action="/delete_department" method="post" onsubmit="return confirm('Are you sure you want to delete?')">
+                                <form id="deleteForm<%= index %>" action="/delete_department" method="post" onsubmit="return confirm('Are you sure you want to delete?')">
                                     <input type="hidden" name="department_id" value="<%= data.id %>">
                                     <button type="submit" class="btn btn-danger" aria-label="Delete">Delete</button>
                                 </form>
                             </td>
                             <td>
-                                <form action="/updateDepartments" method="post" onsubmit="return confirm('Are you sure you want to update?')">
-                                    <input type="hidden" name="department_id" value="<%= data.id %>">
-                                    <button type="submit" class="btn btn-primary" aria-label="Update">Update</button>
-                                </form>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal<%= data.id %>">
+                                    Update
+                                </button>
                             </td>
->>>>>>> Stashed changes
                         </tr>
+
+                        <!-- Bootstrap Modal for Update -->
+                        <div class="modal fade" id="updateModal<%= data.id %>" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header text-light">
+                                        <h3 class="modal-title" id="updateModalLabel">Update Department</h3>
+                                        <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="post" action="/update_department/<%= data.id %>">
+                                            <div class="row">
+                                                <label class="form-label fw-bold">Update Department</label>
+                                                <div class="d-flex">
+                                                    <div class="mb-3 col-md-8 col-sm-12">
+                                                        <input type="text" class="form-control" id="updated_department_name" name="updated_department_name" value="<%= data.department_name %>" required/>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-5 d-flex mx-3">
+                                                        <button type="submit" class="btn btn-sample btn-block text-light text-uppercase mb-3">Update</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     <% }); %>
                 <% } else { %>
                     <tr>
@@ -136,24 +108,11 @@
         </table>
     </section>
 
-<<<<<<< Updated upstream
-
-    <!-- </section> -->
-</div>
-
-    <script>
-        function confirmdelete() {
-            // Display a confirmation dialog
-            let userConfirmed = confirm("Are you sure you want to delete?");
-            
-            // If the user confirms, submit the form for deletion
-            return userConfirmed;
-        }
-    </script>
-
-    
-=======
->>>>>>> Stashed changes
     <%- include('../partials/footer'); %>
+
+    <!-- Bootstrap JavaScript and jQuery Scripts (Make sure you have them included) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
 </body>
 </html>
