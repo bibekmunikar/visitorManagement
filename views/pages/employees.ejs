@@ -11,7 +11,7 @@
     <section class="section-employees">
         <!-- Click on Modal Button -->
         <button type="button" class="btn btn-sample mx-auto text-light btn-design" data-bs-toggle="modal" data-bs-target="#modalForm2">
-            Add new Employee
+            Add New Employee
         </button>
         <!-- Modal -->
         <div class="modal fade" id="modalForm2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -24,7 +24,7 @@
                     <div class="modal-body">
                         <form action="/add_employees" method="post" >
                             <!-- enctype="multipart/form-data" -->
-                            <h4 class="text-dark px-3 my-3">Employee details</h4>
+                            <h4 class="text-dark px-3 my-3">Employee Details</h4>
                             <div class="row">
                                 <div class="mb-3 col">
                                     <label for="full_name" class="form-label">Full Name <span>*</span></label>
@@ -87,7 +87,8 @@
             </div>
         </div>
     </section>
-    <!-- Showing result of the employees -->
+
+    <!-- Showing Table list of the employees -->
     <section class="table-employees mt-3">
         <table id="example" class="table table-striped" style="width:100%">
             <thead>
@@ -105,26 +106,98 @@
             
             <tbody>
                 <% if (employeesData && employeesData.length !== 0) { %>
-            <% employeesData.forEach(function(data, index) { %>
-                <tr>
+                    <% employeesData.forEach(function(data, index) { %>
+               
+                        <tr>
+                        <form action="/delete_employees" method="post">
+                            <input type="hidden" id="employees_id" name="employees_id" value="<%=data.id%>" >
 
-                <form action="/delete_employees" method="post">
-                    <input type="hidden" id="employees_id" name="employees_id" value="<%=data.id%>" >
-
-                    <td><%= index + 1 %></td>
-                    <td><%- data.full_name %></td>
-                    <td><%- data.email %></td>
-                    <td><%- data.mobile_number %></td>
-                    <td><%- data.department_name %></td>
-                    <td><%- data.job_title %></td>
-                    <td>
+                            <td><%= index + 1 %></td>
+                            <td><%- data.full_name %></td>
+                            <td><%- data.email %></td>
+                            <td><%- data.mobile_number %></td>
+                            <td><%- data.department_name %></td>
+                            <td><%- data.job_title %></td>
+                        <td>
                         <button onclick="return confirmdelete()" type="submit" aria-label="Delete" class="btn btn-danger">Delete</button>
-                        <button type="Submit" aria-label="Update" class="btn btn-warning"> Update </button>
-                    </td>
-                    
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal<%= data.id %>">
+                            Update
+                        </button>
+                        </td>
                 </form>  
+            </tr>
 
-                </tr>
+<!-- Bootstrap Modal for Update -->
+<div class="modal fade" id="updateModal<%= data.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-light">
+                <h3 class="modal-title" id="exampleModalLabel">Update Employee</h3>
+                <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="/save_employees/<%= data.id %>">
+                    <h4 class="text-dark px-3 my-3">Update Employee Details</h4>
+                    <div class="row">
+
+                        <div class="mb-3 col">
+                            <label for="full_name" class="form-label">Full Name <span>*</span></label>
+                            <input type="hidden" name="id" value="<%= data.id %>">
+                            <input type="text" class="form-control" id="new_full_name" name="new_full_name" value="<%= data.full_name %>" required/>
+                        </div>        
+                        
+                        <div class="mb-3 col">
+                            <label class="form-label">Alternative Name</label>
+                            <input type="hidden" name="id" value="<%= data.id %>">
+                            <input type="text" class="form-control" id="new_alt_name" name="new_alt_name" placeholder="Alternative Name" value="<%= data.alt_name %>" required/>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="mb-3 col">
+                            <label class="form-label">Email address<span>*</span></label>
+                            <input type="hidden" name="id" value="<%= data.id %>">
+                            <input type="email" class="form-control" id="new_email" name="new_email" placeholder="Email address" value="<%= data.email %>" required/>
+                        </div>
+
+                        <div class="mb-3 col">
+                            <label class="form-label">Mobile number <span>*</span></label>
+                            <input type="hidden" name="id" value="<%= data.id %>">
+                            <input type="tel" class="form-control" id="new_mobile_number" name="new_mobile_number" placeholder="Mobile Number" value="<%= data.mobile_number %>" required/>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="mb-3 col">
+                            <label class="form-label">Department<span>*</span></label>
+                            <!-- Inside the department select in the Update Form -->
+                        <select class="form-control" id="department_id" name="department_id" required>
+                            <option value="">Select Department</option>
+                                <% departments.forEach(function(department) { %>
+                            <option value="<%= department.id %>" <%= department.id === data.department_id ? 'selected' : '' %>><%= department.department_name %></option>
+                                 <% }); %>
+                        </select>
+
+                        </div>
+
+                        <div class="mb-3 col">
+                            <label class="form-label">Job Title<span>*</span></label>
+                            <input type="hidden" name="id" value="<%= data.id %>">
+                            <input type="text" class="form-control" id="new_job_title" name="new_job_title" placeholder="Job Title" value="<%= data.job_title %>" required/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- Update Button -->
+                        <button type="submit" class="btn btn-sample text-light text-uppercase mb-3">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
                 <% }); %>
             <% } else { %>
                 <tr>
