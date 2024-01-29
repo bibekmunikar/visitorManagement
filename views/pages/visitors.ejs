@@ -18,7 +18,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header text-light">
-                        <h3 class="modal-title" id="exampleModalLabel">Pre-register a visitor</h3>
+                        <h3 class="modal-title" id="exampleModalLabel">Pre-register a Visitor</h3>
                         <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -33,7 +33,7 @@
 								
 								<div class="mb-3 col">
                                     <label class="form-label">From <span>*</span></label>
-                                    <input type="text" class="form-control" id="fromCompany" name="fromCompany" placeholder="Visitor's company or organization" />
+                                    <input type="text" class="form-control" id="fromCompany" name="fromCompany" placeholder="Visitor's Company Name" />
 
                                 </div>
                             </div>
@@ -94,8 +94,6 @@
                             </div>
 
                             <div class="modal-footer">
-                                <!-- <p class="float-start">Close</p> -->
-                                <!-- <button type="submit" class="btn btn-primary text-light">Close</button> -->
                                 <button type="submit" class="btn btn-sample text-light text-uppercase mb-3 ">Submit</button>
                             </div>
                         </form>
@@ -128,29 +126,114 @@
         <tbody>
             <% if (visitorsData && visitorsData.length !== 0) { %>
         <% visitorsData.forEach(function(data, index) { %>
-            <tr>
-
+        <tr>
             <form action="/delete_visitors" method="post">
                 <input type="hidden" id="visitors_id" name="visitors_id" value="<%=data.id%>" >
 
-                <td><%= index + 1 %></td>
-                <td><%- data.visitors_full_name %></td>
-                <td><%- data.fromCompany %></td>
-                <td><%- data.email %></td>
-                <td><%- data.mobile %></td>
-                <td><%- data.full_name %></td>
-                <td><%- data.date.toLocaleDateString() %></td>
-                <td><%- data.start_time %></td>
-                <td><%- data.end_time %></td>
-                <td><%- data.message %></td>
+                    <td><%= index + 1 %></td>
+                    <td><%- data.visitors_full_name %></td>
+                    <td><%- data.fromCompany %></td>
+                    <td><%- data.email %></td>
+                    <td><%- data.mobile %></td>
+                    <td><%- data.full_name %></td>
+                    <td><%- data.date.toLocaleDateString() %></td>
+                    <td><%- data.start_time %></td>
+                    <td><%- data.end_time %></td>
+                    <td><%- data.message %></td>
                 <td>
                     <button onclick="return confirmdelete()" type="submit" aria-label="Delete" class="btn btn-danger">Delete</button>
-                    <button type="Submit" aria-label="Update" class="btn btn-warning"> Update </button>
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal<%= data.id %>">
+                        Update
+                    </button>
                 </td>
-           
-
             </form>
-            </tr>
+        </tr>
+
+    <!-- Bootstrap Modal for Update -->
+            <div class="modal fade" id="updateModal<%= data.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header text-light">
+                            <h3 class="modal-title" id="exampleModalLabel">Update Pre-register a Visitor</h3>
+                            <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="/save_visitors/<%= data.id %>">
+                                <h4 class="text-dark px-3 my-3">Update Visitor's details</h4>
+                                <div class="row">
+                                    <div class="mb-3 col">
+                                        <label class="form-label">Full Name <span>*</span></label>
+                                        <input type="text" class="form-control" id="new_visitors_full_name" name="new_visitors_full_name" value="<%= data.visitors_full_name %>" required/>
+                                    </div>
+                                    <div class="mb-3 col">
+                                        <label class="form-label">From <span>*</span></label>
+                                        <input type="text" class="form-control" id="new_fromCompany" name="new_fromCompany" placeholder="Visitor's Company Name" value="<%= data.fromCompany %>" required/>
+                                    </div>
+                                </div>
+                            
+                                <div class="row">
+                                    <div class="mb-3 col">
+                                        <label class="form-label">Visitor's email address</label>
+                                        <input type="text" class="form-control" id="new_email" name="new_email" placeholder="Enter the visitor's email address" value="<%= data.email %>" required/>
+                                    </div>
+                                    <div class="mb-3 col">
+                                        <label class="form-label">Mobile number <span>*</span></label>
+                                        <input type="text" class="form-control" id="new_mobile" name="new_mobile" placeholder="Phone" value="<%= data.mobile %>" required/>
+                                    </div>
+                                </div>
+                            
+                                <h4 class="text-dark px-3 my-3">Event's details</h4>
+                            
+                                <div id="wrapper">
+                                    <label for="yes_no_radio">Do you agree to the Health and Safety terms?</label>
+                                    <p>
+                                        <input type="radio" name="yes_no" checked>Yes</input>
+                                    </p>
+                                    <p>
+                                        <input type="radio" name="yes_no">No</input>
+                                    </p>
+                                </div>
+                            
+                                <div class="mb-3">
+                                    <label class="form-label">Visiting employee</label>
+                                    <select class="form-control" id="employees_id" name="employees_id" required>
+                                        <option value="">Select Employee</option>
+                                        <% employees.forEach(function(employee) { %>
+                                            <option value="<%= employee.id %>" <%= employee.id === data.employees_id ? 'selected' : '' %>>
+                                                <%= employee.full_name %>
+                                            </option>
+                                        <% }); %>
+                                    </select>
+                                </div>
+                            
+                                <div class="row">
+                                    <div class="mb-3 col">
+                                        <label class="form-label">Date <span>*</span></label>
+                                        <input type="date" class="form-control" id="new_date" name="new_date" placeholder="Start Date"  value="<%= data.date %>" required/>
+                                    </div>
+                                    <div class="mb-3 col">
+                                        <label class="form-label">Start time <span>*</span></label>
+                                        <input type="time" class="form-control" id="new_start_time" name="new_start_time" placeholder="Start Time" value="<%= data.start_time %>" required/>
+                                    </div>
+                                    <div class="mb-3 col">
+                                        <label class="form-label">End time <span>*</span></label>
+                                        <input type="time" class="form-control" id="new_end_time" name="new_end_time" placeholder="End Time" value="<%= data.end_time %>" required/>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Message for Sign In/Out Manager</label>
+                                    <textarea class="form-control" id="new_message" name="new_message" placeholder="Message" rows="3" required><%= data.message %></textarea>
+                                </div>
+                            
+                                <div class="modal-footer">
+                                    <!-- Update Button -->
+                                    <button type="submit" class="btn btn-sample text-light text-uppercase mb-3">Update</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <% }); %>
         <% } else { %>
@@ -163,15 +246,6 @@
 </section>
 
 </div>
-<script>
-    function confirmdelete() {
-        // Display a confirmation dialog
-        let userConfirmed = confirm("Are you sure you want to delete?");
-        
-        // If the user confirms, submit the form for deletion
-        return userConfirmed;
-    }
-</script>
 
     <%- include('../partials/footer'); %>
 </body>

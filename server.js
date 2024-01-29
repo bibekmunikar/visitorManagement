@@ -315,6 +315,43 @@ app.post('/delete_visitors', function(req, res) {
  });
 
 
+// Update Pre-register a Visitor
+app.post('/save_visitors/:visitors_id', (req, res) => {
+    const visitors_id = req.params.visitors_id;
+    const {
+        new_visitors_full_name,
+        new_fromCompany,
+        new_email,
+        new_mobile,
+        employees_id,
+        new_date,
+        new_start_time,
+        new_end_time,
+        new_message
+    } = req.body;
+
+    // Check if any of the required fields are null or empty
+    const requiredFields = [new_visitors_full_name, new_fromCompany, new_email, new_mobile, employees_id, new_date, new_start_time, new_end_time, new_message];
+    if (requiredFields.some(field => !field || field.trim() === '')) {
+        res.status(400).send("Visitors information cannot be empty.");
+        return;
+    }
+
+    // Update the visitors in the database
+    const query = 'UPDATE visitors SET visitors_full_name = ?, fromCompany = ?, email = ?, mobile = ?, employees_id = ?, date = ?, start_time = ?, end_time = ?, message = ? WHERE id = ?';
+    const values = [new_visitors_full_name, new_fromCompany, new_email, new_mobile, employees_id, new_date, new_start_time, new_end_time, new_message, visitors_id];
+    
+    conn.query(query, values, (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send("Error updating visitors.");
+            return;
+        }
+        res.redirect('/visitors');
+    });
+});
+
+
 //SignIn/Out Manager page
 app.get('/visitorcontrol', function(req, res) {
   res.render('pages/visitorcontrol', {username:req.session.username});
@@ -397,8 +434,6 @@ app.post('/save_update', (req, res) => {
       res.redirect('/departments');
     });
 });
-
-
 
 
 //Employees page
@@ -484,6 +519,32 @@ app.post('/delete_employees', function(req, res) {
 	   res.status(400).send('Bad Request');
 	}
  });
+
+
+// Update Employees
+app.post('/save_employees/:employees_id', (req, res) => {
+    const employees_id = req.params.employees_id;
+    const { new_full_name, new_alt_name, new_email, new_mobile_number, department_id, new_job_title } = req.body;
+
+    // Check if any of the required fields are null or empty
+    if (!new_full_name || !new_alt_name || !new_email || !new_mobile_number || !department_id || !new_job_title) {
+        res.status(400).send("Employee information cannot be empty.");
+        return;
+    }
+
+    // Update the employees in the database
+    const query = 'UPDATE employees SET full_name = ?, alt_name = ?, email = ?, mobile_number = ?, department_id = ?, job_title = ? WHERE id = ?';
+    conn.query(query, [new_full_name, new_alt_name, new_email, new_mobile_number, department_id, new_job_title, employees_id], (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send("Error updating employees.");
+            return;
+        }
+        res.redirect('/employees');
+    });
+});
+
+
 
 // login page
 app.get('/404', function(req, res) {
