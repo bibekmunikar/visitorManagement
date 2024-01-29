@@ -378,6 +378,49 @@ app.post('/add_departments', function(req, res) {
  });
 
 
+ // Updating Department
+app.post('/updateDepartments', function(req, res) {
+    const department_id = req.body.department_id;
+    const updated_department_name = req.body.updated_department_name;
+
+    if (department_id && updated_department_name) {
+        var sql = 'UPDATE departments SET department_name = ? WHERE id = ?';
+        conn.query(sql, [updated_department_name, department_id], function(err, result) {
+            if (err) {
+                console.error(err);
+                res.status(500).send('Internal Server Error');
+            } else {
+                console.log('Record updated');
+                res.redirect('/departments');
+            }
+        });
+    } else {
+        console.log("Error: Department ID or updated name is missing");
+        res.status(400).send('Bad Request');
+    }
+});
+
+//  //  Updating Department
+//  app.post('/updateDepartments', function(req, res) {
+//     const department_id = req.body.department_id;
+// 	if (department_id) {
+// 	   var sql = 'Update from departments where id=?';
+// 	   conn.query(sql, [department_id], function(err, result) {
+// 		  if (err) {
+// 			 console.error(err);
+// 			 res.status(500).send('Internal Server Error');
+// 		  } else {
+// 			 console.log('Record updated');
+// 			 res.redirect('/departments');
+// 		  }
+// 	   });
+// 	} else {
+// 	   console.log("Error: Department name is missing");
+// 	   res.status(400).send('Bad Request');
+// 	}
+//  });
+ 
+
 //Employees page
 app.get('/employees', function(req, res) {
     if (req.session.loggedin) {

@@ -5,27 +5,10 @@
     <section>
         <div class="page-header">
             <h1 class="text-dark">Departments</h1>
-            <!-- <span class="mx-4">Pre-Register a Visitors</span> -->
         </div>
     </section>
-    <!-- <section class="section-preregister px-3"> -->
-        <!-- <form action="/add_departments" method="post"> 
-            <div class="row my-3">
-                <div class="col-5 form-design">
-                    <label class="form-label fw-bold">Add Department</label>
-                    <div class="d-flex">
-                        <div class="mb-3 col-md-8 col-sm-12">
-                            <input type="text" class="form-control" id="department_name" name="department_name" placeholder="Department name" required/>
-                        </div>
-                        <div class="col-md-3 col-sm-5 d-flex mx-3">
-                            <input type="submit" value="Add" class="btn btn-primary btn-block text-light text-uppercase mb-3">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form> -->
-       
 
+<<<<<<< Updated upstream
          <!-- Click on Modal Button -->
          <section class="section-department">
             <button type="button" class="btn btn-sample mx-auto text-light btn-design" data-bs-toggle="modal" data-bs-target="#department_id">
@@ -49,15 +32,43 @@
                                         <div class="col-md-3 col-sm-5 d-flex mx-3">
                                             <input type="submit" value="Add" class="btn btn-sample btn-block text-light text-uppercase mb-3">
                                         </div>
+=======
+    <!-- Click on Modal Button -->
+    <section class="section-department my-3">
+        <button type="button" class="btn btn-sample mx-auto text-light btn-design my-3" data-bs-toggle="modal" data-bs-target="#addDepartmentModal">
+            Add Department
+        </button>
+
+        <!-- Add Department Modal -->
+        <div class="modal fade" id="addDepartmentModal" tabindex="-1" aria-labelledby="addDepartmentModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header text-light">
+                        <h3 class="modal-title" id="addDepartmentModalLabel">New Department</h3>
+                        <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/add_departments" method="post">
+                            <div class="row">
+                                <label class="form-label fw-bold">Add Department</label>
+                                <div class="d-flex">
+                                    <div class="mb-3 col-md-8 col-sm-12">
+                                        <input type="text" class="form-control" id="department_name" name="department_name" placeholder="Department name" required/>
+                                    </div>
+                                    <div class="col-md-3 col-sm-5 d-flex mx-3">
+                                        <input type="submit" value="Add" class="btn btn-sample btn-block text-light text-uppercase mb-3">
+>>>>>>> Stashed changes
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
+<<<<<<< Updated upstream
 
        
 
@@ -74,32 +85,58 @@
                 <tbody>
                     <% if (departmentData && departmentData.length !== 0) { %>
                         <% departmentData.forEach(function(data, index) { %>
+=======
+    <!-- TABLE FOR DEPARTMENTS LIST -->
+    <section class="section-table my-4">
+        <table id="example" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>S No.</th>
+                    <th>Department Name</th>
+                    <th>Delete</th>
+                    <th>Update</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (departmentData && departmentData.length !== 0) { %>
+                    <% departmentData.forEach(function(data, index) { %>
+>>>>>>> Stashed changes
                         <tr>
-                        
-                            <form action="/delete_department" method="post">
-                                <input type="hidden" id="department_id" name="department_id" value="<%=data.id%>" >
-
                             <td><%= index + 1 %></td>
                             <td><%= data.department_name %></td>
                             <td>
+<<<<<<< Updated upstream
                                 <button onclick="return confirmdelete()" type="submit" aria-label="Delete" class="btn btn-danger">Delete</button>
                                 <button type="Submit" aria-label="Update" class="btn btn-warning"> Update </button>
                             </td>
 
                             </form>
                      
+=======
+                                <form action="/delete_department" method="post" onsubmit="return confirm('Are you sure you want to delete?')">
+                                    <input type="hidden" name="department_id" value="<%= data.id %>">
+                                    <button type="submit" class="btn btn-danger" aria-label="Delete">Delete</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="/updateDepartments" method="post" onsubmit="return confirm('Are you sure you want to update?')">
+                                    <input type="hidden" name="department_id" value="<%= data.id %>">
+                                    <button type="submit" class="btn btn-primary" aria-label="Update">Update</button>
+                                </form>
+                            </td>
+>>>>>>> Stashed changes
                         </tr>
-                        <% }); %>
-                    <% } else { %>
-                        <tr>
-                        <td colspan="3">No Data Found</td>
-                        </tr>
-                    <% } %>
-                </tbody>
-            </table>
-        </section>
-       <!-- Table department ends -->
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="4">No Data Found</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </section>
 
+<<<<<<< Updated upstream
 
     <!-- </section> -->
 </div>
@@ -115,6 +152,8 @@
     </script>
 
     
+=======
+>>>>>>> Stashed changes
     <%- include('../partials/footer'); %>
 </body>
 </html>
