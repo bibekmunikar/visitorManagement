@@ -1,29 +1,30 @@
 <%- include('../partials/head'); %>
-<body class="container-fluid">
+<body>
     <%- include('../partials/header'); %>
+<div class="container-fluid">
     <section>
         <div class="page-header">
-            <h1 class="text-primary">Employees</h1>
+            <h1 class="text-dark">Employees</h1>
             <!-- <span class="mx-4">Pre-Register a Visitors</span> -->
         </div>
     </section>
-    <section class="section-employees my-3">
+    <section class="section-employees">
         <!-- Click on Modal Button -->
-        <button type="button" class="btn btn-primary mx-auto mt-3 text-light" data-bs-toggle="modal" data-bs-target="#modalForm2">
+        <button type="button" class="btn btn-sample mx-auto text-light btn-design" data-bs-toggle="modal" data-bs-target="#modalForm2">
             Add new Employee
         </button>
         <!-- Modal -->
         <div class="modal fade" id="modalForm2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header bg-primary text-light">
+                    <div class="modal-header text-light">
                         <h3 class="modal-title" id="exampleModalLabel">New Employee</h3>
                         <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form action="/add_employees" method="post" >
                             <!-- enctype="multipart/form-data" -->
-                            <h4 class="text-primary px-3 my-3">Employee details</h4>
+                            <h4 class="text-dark px-3 my-3">Employee details</h4>
                             <div class="row">
                                 <div class="mb-3 col">
                                     <label for="full_name" class="form-label">Full Name <span>*</span></label>
@@ -78,7 +79,7 @@
                             <div class="modal-footer">
                                 <!-- <input type="submit" value="Add" class="btn btn-primary btn-block text-light text-uppercase mb-3"> -->
 
-                                <button type="submit" class="btn btn-warning text-light ">Submit</button>
+                                <button type="submit" class="btn btn-sample text-light text-uppercase mb-3">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -87,7 +88,7 @@
         </div>
     </section>
     <!-- Showing result of the employees -->
-    <section class="table-employees">
+    <section class="table-employees mt-3">
         <table id="example" class="table table-striped" style="width:100%">
             <thead>
                 <tr>
@@ -99,7 +100,6 @@
                     <th>Job Title</th>
                     <!-- <th>User Role</th> -->
                     <th>Action</th>
-                    <th></th>
                 </tr>
             </thead>
             
@@ -117,8 +117,10 @@
                     <td><%- data.mobile_number %></td>
                     <td><%- data.department_name %></td>
                     <td><%- data.job_title %></td>
-                    <td><button onclick="return confirmdelete()" type="submit" aria-label="Delete">Delete</button></td>
-                    <td><button type="Submit" aria-label="Update"> Update </button></td>
+                    <td>
+                        <button onclick="return confirmdelete()" type="submit" aria-label="Delete" class="btn btn-danger">Delete</button>
+                        <button type="Submit" aria-label="Update" class="btn btn-warning"> Update </button>
+                    </td>
                     
                 </form>  
 
@@ -132,7 +134,7 @@
             </tbody>
         </table>
     </section>
-
+</div>
     <script>
         function confirmdelete() {
             // Display a confirmation dialog

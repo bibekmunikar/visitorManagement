@@ -1,6 +1,7 @@
 <%- include('../partials/head'); %>
-<body class="container-fluid">
+<body>
     <%- include('../partials/header'); %>
+    <div class="container-fluid">
     <section>
         <div class="page-header">
             <h1 class="text-dark">Departments</h1>
@@ -26,8 +27,8 @@
        
 
          <!-- Click on Modal Button -->
-         <section class="section-department my-3">
-            <button type="button" class="btn btn-sample mx-auto text-light btn-design my-3" data-bs-toggle="modal" data-bs-target="#department_id">
+         <section class="section-department">
+            <button type="button" class="btn btn-sample mx-auto text-light btn-design" data-bs-toggle="modal" data-bs-target="#department_id">
                 Add Department
             </button>
             <div class="modal fade" id="department_id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -61,15 +62,13 @@
        
 
        <!--    TABLE FOR DEPARTMENTS LIST   -->
-       <section class="section-table my-4">
+       <section class="section-table mt-3">
             <table id="example" class="table table-striped" style="width:100%">
                 <thead>
                     <tr>
                         <th>S No.</th>
                         <th>Deparment Name</th>
                         <th>Action</th>
-                        <th></th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -82,8 +81,10 @@
 
                             <td><%= index + 1 %></td>
                             <td><%= data.department_name %></td>
-                            <td><button onclick="return confirmdelete()" type="submit" aria-label="Delete">Delete</button></td>
-                            <td><button type="Submit" aria-label="Update"> Update </button></td>
+                            <td>
+                                <button onclick="return confirmdelete()" type="submit" aria-label="Delete" class="btn btn-danger">Delete</button>
+                                <button type="Submit" aria-label="Update" class="btn btn-warning"> Update </button>
+                            </td>
 
                             </form>
                      
@@ -101,7 +102,7 @@
 
 
     <!-- </section> -->
-
+</div>
 
     <script>
         function confirmdelete() {

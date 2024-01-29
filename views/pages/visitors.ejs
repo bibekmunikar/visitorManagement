@@ -1,28 +1,29 @@
 <%- include('../partials/head'); %>
-<body class="container-fluid">
+<body>
     <%- include('../partials/header'); %>
+<div class="container-fluid">
     <section>
-        <div class="page-header mt-2">
-            <h1 class="text-primary">My Visitors</h1>
+        <div class="page-header">
+            <h1 class="text-dark">My Visitors</h1>
             <!-- <span class="mx-4">Pre-Register a Visitors</span> -->
         </div>
     </section>
     <section class="section-preregister">
         <!-- Click on Modal Button -->
-        <button type="button" class="btn btn-primary mx-auto mt-3 text-light" data-bs-toggle="modal" data-bs-target="#modalForm">
+        <button type="button" class="btn btn-sample mx-auto text-light btn-design mb-3" data-bs-toggle="modal" data-bs-target="#modalForm">
             Pre-register a visitor
         </button>
         <!-- Modal -->
         <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header bg-primary text-light">
+                    <div class="modal-header text-light">
                         <h3 class="modal-title" id="exampleModalLabel">Pre-register a visitor</h3>
                         <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                     <form action="/visitors" method="post" >
-                            <h4 class="text-primary px-3 my-3">Visitor's details</h4>
+                            <h4 class="text-dark px-3 my-3">Visitor's details</h4>
                             <div class="row">
                                 <div class="mb-3 col">
                                     <label class="form-label">Full Name <span>*</span></label>
@@ -48,7 +49,7 @@
                                 </div>
 							</div>
 							
-                            <h4 class="text-primary px-3 my-3">Event's details</h4>
+                            <h4 class="text-dark px-3 my-3">Event's details</h4>
 
                             <div id="wrapper">
                                 <label for="yes_no_radio">Do you agree to the Health and Safety terms?</label>
@@ -94,8 +95,8 @@
 
                             <div class="modal-footer">
                                 <!-- <p class="float-start">Close</p> -->
-                                <button type="submit" class="btn btn-primary text-light">Close</button>
-                                <button type="submit" class="btn btn-warning text-light ">Save</button>
+                                <!-- <button type="submit" class="btn btn-primary text-light">Close</button> -->
+                                <button type="submit" class="btn btn-sample text-light text-uppercase mb-3 ">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -121,7 +122,6 @@
                 <th>End Time</th>
                 <th>Message</th>
                 <th>Action</th>
-                <th></th>
             </tr>
         </thead>
         
@@ -143,8 +143,10 @@
                 <td><%- data.start_time %></td>
                 <td><%- data.end_time %></td>
                 <td><%- data.message %></td>
-                <td><button onclick="return confirmdelete()" type="submit" aria-label="Delete">Delete</button></td>
-                <td><button type="Submit" aria-label="Update"> Update </button></td>
+                <td>
+                    <button onclick="return confirmdelete()" type="submit" aria-label="Delete" class="btn btn-danger">Delete</button>
+                    <button type="Submit" aria-label="Update" class="btn btn-warning"> Update </button>
+                </td>
            
 
             </form>
@@ -160,6 +162,7 @@
     </table>
 </section>
 
+</div>
 <script>
     function confirmdelete() {
         // Display a confirmation dialog

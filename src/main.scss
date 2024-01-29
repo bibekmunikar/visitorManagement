@@ -3,14 +3,20 @@
 
 // Include any default variable overrides here (though functions won't be available)
 
-$primary: #0093d0; 
+// $primary: #0093d0; 
 
 @import "../node_modules/bootstrap/scss/bootstrap";
 // @import "/src/datatables.net-bs5";
 
 @import url('../node_modules/font-awesome/css/font-awesome.min.css'); 
+.header{
+    background-color: #fafafa;
+}
 .modal-header {
     background-color: #0093d0;
+}
+.bg-sample{
+    background-color: #ff6300 !important; 
 }
 .btn-sample{
     background-color: #ff6300 !important; 
@@ -115,14 +121,19 @@ a.btn-custom{
 
 
 // dataTables css 
-.dataTables_wrapper{
-    border: 2px solid #eaeaea;
-    padding: 30px 10px;
-}
 
+.section-table, .table-employees{
+    border: 2px solid #eaeaea;
+    padding: 30px 20px;
+}
+.active .page-link{color: #fff !important;}
+.page-link{
+    color: #0093d0 !important;
+}
+.paging_simple_numbers{margin-top:15px !important; }
 //Modal form
-.section-preregister h4{position: relative;}
-.section-preregister h4::before{
+.section-preregister h4, .section-employees h4{position: relative;}
+.section-preregister h4::before, .section-employees h4::before{
     content: "";
     width: 3px;
     height: 30px;
@@ -131,9 +142,8 @@ a.btn-custom{
     top: 0;
     left: 0;
 }
-<<<<<<< Updated upstream
 
-.section-employees span{
+.section-employees span, .section-preregister span{
     color: red;
 }
 // MULTI STEP FORM 
@@ -635,5 +645,3 @@ input[type="radio"]:hover {
         padding-top: 45px;
     }
 }
-=======
->>>>>>> Stashed changes
