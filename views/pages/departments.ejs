@@ -80,12 +80,13 @@
                                         <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form method="post" action="/update_department/<%= data.id %>">
+                                        <form method="post" action="/save_update">
                                             <div class="row">
                                                 <label class="form-label fw-bold">Update Department</label>
                                                 <div class="d-flex">
                                                     <div class="mb-3 col-md-8 col-sm-12">
-                                                        <input type="text" class="form-control" id="updated_department_name" name="updated_department_name" value="<%= data.department_name %>" required/>
+                                                        <input type="hidden" name="id" value="<%= data.id %>">
+                                                        <input type="text" class="form-control" id="new_department_name" name="new_department_name" value="<%= data.department_name %>" required/>
                                                     </div>
                                                     <div class="col-md-3 col-sm-5 d-flex mx-3">
                                                         <button type="submit" class="btn btn-sample btn-block text-light text-uppercase mb-3">Update</button>

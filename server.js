@@ -377,25 +377,27 @@ app.post('/add_departments', function(req, res) {
 	}
  });
 
-
-// Assuming you are rendering the updateDepartment.ejs template
-app.post('/update_department', (req, res) => {
-    const { id } = req.body;
-    // Fetch data for the specific department using department_id
-    db.query('SELECT * FROM departments WHERE id = ?', [id], (err, results) => {
-      if (err) throw err;
-      res.render('updateDepartment', { department: results[0] });
-    });
-});
-
+//Update Departments
 app.post('/save_update', (req, res) => {
     const { id, new_department_name } = req.body;
+
+    // Check if the new_department_name is not null or empty
+    if (!new_department_name) {
+        res.status(400).send("Department name cannot be empty.");
+        return;
+    }
+
     // Update the department in the database
-    db.query('UPDATE departments SET department_name = ? WHERE id = ?', [new_department_name, id], (err) => {
-      if (err) throw err;
+    conn.query('UPDATE departments SET department_name = ? WHERE id = ?', [new_department_name, id], (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error updating department.");
+        return;
+      }
       res.redirect('/departments');
     });
 });
+
 
 
 
