@@ -198,6 +198,7 @@
                                     <label class="form-label">Visiting employee</label>
                                     <select class="form-control" id="employees_id" name="employees_id" required>
                                         <option value="">Select Employee</option>
+                                        <!-- Use forEach to dynamically generate options and set the selected attribute -->
                                         <% employees.forEach(function(employee) { %>
                                             <option value="<%= employee.id %>" <%= employee.id === data.employees_id ? 'selected' : '' %>>
                                                 <%= employee.full_name %>
@@ -208,8 +209,9 @@
                             
                                 <div class="row">
                                     <div class="mb-3 col">
-                                        <label class="form-label">Date <span>*</span></label>
-                                        <input type="date" class="form-control" id="new_date" name="new_date" placeholder="Start Date"  value="<%= data.date %>" required/>
+                                            <label class="form-label">Date <span>*</span></label>
+                                            <!-- Set the value attribute for the date field -->
+                                            <input type="date" class="form-control" id="new_date" name="new_date" placeholder="Start Date" value="<%= data.date %>" required/>
                                     </div>
                                     <div class="mb-3 col">
                                         <label class="form-label">Start time <span>*</span></label>
