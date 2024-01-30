@@ -2,8 +2,49 @@
 <body>
     <%- include('../partials/header'); %>
     <div class="container-fluid">
+        <section>
+            <div class="page-header">
+                <h1 class="text-dark">Sign In/Out Manager</h1>
+            </div>
+        </section>
+        <section class="table-employees mt-3">
+            <table id="example" class="table table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>S No.</th>
+                        <th>Name</th>
+                        <th>From</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Visiting Employee</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <% if (visitors && visitors.length > 0) { %>
+                        <% visitors.forEach(function(visitor, index) { %>
+                            <tr>
+                                <td><%= index + 1 %></td>
+                                <td><%- visitor.name %></td>
+                                <td><%- visitor.from %></td>
+                                <td><%- visitor.email %></td>
+                                <td><%- visitor.phone %></td>
+                                <td><%- visitor.employee_id %></td>
+                                <td><button class="btn btn-danger">Sign Out</button></td>
+                            </tr>
+                        <% }); %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="7">No Data Found</td>
+                        </tr>
+                    <% } %>
+                    
+                </tbody>
+            </table>
+        </section>
+    </div>
     
     <%- include('../partials/footer'); %>
-</div>
 </body>
 </html>

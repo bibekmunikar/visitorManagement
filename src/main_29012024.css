@@ -11978,7 +11978,7 @@ textarea.form-control-lg {
   }
 }
 .header {
-  background-color: #fafafa !important;
+  background-color: #fafafa;
 }
 
 .modal-header {
@@ -12537,4 +12537,4 @@ input[type=radio]:hover {
   #title-container {
     padding-top: 45px;
   }
-}/*# sourceMappingURL=main.css.map */
+}/*# sourceMappingURL=main_29012024.css.map */

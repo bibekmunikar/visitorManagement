@@ -1,6 +1,7 @@
 <%- include('../partials/head'); %>
-<body class="container-fluid">
+<body>
     <%- include('../partials/header'); %>
+    <div class="container-fluid">
     <section>
         <div class="page-header">
             <h1 class="text-dark">Departments</h1>
@@ -8,8 +9,8 @@
     </section>
 
     <!-- Click on Modal Button -->
-    <section class="section-department my-3">
-        <button type="button" class="btn btn-sample mx-auto text-light btn-design my-3" data-bs-toggle="modal" data-bs-target="#addDepartmentModal">
+    <section class="section-department">
+        <button type="button" class="btn btn-sample mx-auto text-light btn-design mb-3" data-bs-toggle="modal" data-bs-target="#addDepartmentModal">
             Add Department
         </button>
 
@@ -42,7 +43,7 @@
     </section>
 
     <!-- TABLE FOR DEPARTMENTS LIST -->
-    <section class="section-table my-4">
+    <section class="section-table mb-4">
         <table id="example" class="table table-striped" style="width:100%">
             <thead>
                 <tr>
@@ -107,7 +108,7 @@
             </tbody>
         </table>
     </section>
-
+    </div>
     <%- include('../partials/footer'); %>
 
 </body>

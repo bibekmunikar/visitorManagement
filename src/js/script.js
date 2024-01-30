@@ -230,6 +230,14 @@ employeeSearchInput.addEventListener("blur", () => {
 
 // ====================== FINAL DONT DELETE IT ENDS ================================
 
-
-
-
+// getEmployeeEmailById(employeeId, (err, email) => {
+//     if (err) {
+//         console.error('Error:', err);
+//     } else {
+//         if (email) {
+//             sendEmailNotification(name, email);
+//         } else {
+//             console.log('Employee email not found');
+//         }
+//     }
+// });

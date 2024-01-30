@@ -18,6 +18,8 @@ const app = express();
 // Initialize flash
 app.use(flash());
 
+
+
 // Set up Multer storage
 const storage = multer.diskStorage({
     destination: 'uploads/', // Specify the upload directory
@@ -128,10 +130,13 @@ app.post('/checkin', (req, res) => {
                 return res.status(500).send(`Error fetching employee data: ${employeeErr.message}`);
             }
 
-            const selectedEmployee = employeeResult[0];
+            // Fetch employee email based on employee_id
+            // const employeeEmail = getEmployeeEmailById(employee_id); 
 
-         // Send email notification
-        sendEmailNotification(name, selectedEmployee.email);
+            // Send email notification
+            // sendEmailNotification(name, employeeEmail);
+
+            // const selectedEmployee = employeeResult[0];
 
         console.log('Visitor data inserted successfully');
         res.redirect('/');
@@ -141,10 +146,52 @@ app.post('/checkin', (req, res) => {
 });
 
 
+
 //SignOut page
 app.get('/signout', function(req, res) {
-	res.render('pages/signout');
+    const sql = 'SELECT * FROM front_visitors';
+    conn.query(sql, (err, visitors) => {
+        if (err) throw err;
+        res.render('pages/signout', { visitors: visitors });
+    });
 });
+
+// Handle the sign-out request
+
+// Handle the sign-out request
+app.post('/signout', function(req, res) {
+    var visitorId = req.body.id;
+    var checkoutTime = new Date().toISOString(); // Get current time for checkout
+
+    // Update the database to record the checkout time
+    var sql = 'UPDATE front_visitors SET checkout_time = ? WHERE id = ?';
+    conn.query(sql, [checkoutTime, visitorId], function(err, result) {
+        if (err) {
+            console.error('Error updating database:', err);
+            res.status(500).json({ message: 'Error signing out visitor' });
+        } else {
+            res.status(200).json({ message: 'Visitor signed out successfully' });
+        }
+    });
+});
+
+
+
+// app.post('/signout', function(req, res) {
+//     var id = req.body.id;
+//     var checkout_time = new Date().toISOString(); // Get current time for checkout
+
+//     // Update the database to record the checkout time
+//     var sql = 'UPDATE front_visitors SET checkout_time = ? WHERE id = ?';
+//     conn.query(sql, [checkout_time, id], function(err, result) {
+//         if (err) {
+//             console.error('Error updating database:', err);
+//             res.status(500).json({ message: 'Error signing out visitor' });
+//         } else {
+//             res.status(200).json({ message: 'Visitor signed out successfully' });
+//         }
+//     });
+// });
 
 // login page
 app.get('/login', function(req, res) {
@@ -354,7 +401,15 @@ app.post('/save_visitors/:visitors_id', (req, res) => {
 
 //SignIn/Out Manager page
 app.get('/visitorcontrol', function(req, res) {
-  res.render('pages/visitorcontrol', {username:req.session.username});
+        if (req.session.loggedin) {
+        const sql = 'SELECT * FROM front_visitors';
+        conn.query(sql, (err, visitors) => {
+            if (err) throw err;
+            res.render('pages/visitorcontrol',  { visitors: visitors, username:req.session.username } );
+        });
+    } else {
+        res.redirect('/');
+  }
 });
 
 
@@ -551,28 +606,47 @@ app.get('/404', function(req, res) {
     res.render('pages/404');
   });
 
+// SENDING MAIL TO EMPLOYEES STARTS
 
-  function sendEmailNotification(visitorName, employeeEmail) {
-    const mailOptions = {
-      from: 'atraxgroup2024@gmail.com',
-      to: employeeEmail,
-      subject: 'Visitor Sign-In Notification',
-      text: `Hello Visitor ${visitorName} has signed in.`
-    };
+
+// Function to retrieve employee email by ID
+// function getEmployeeEmailById(employeeId, callback) {
+//     conn.query('SELECT email FROM employees WHERE id = ?', [employeeId], (err, result) => {
+//         if (err) {
+//             console.error('Error fetching employee email:', err);
+//             callback(err, null); // Pass error to callback
+//         } else {
+//             if (result.length > 0) {
+//                 callback(null, result[0].email); // Pass email to callback
+//             } else {
+//                 callback(null, null); // Pass null if employee not found
+//             }
+//         }
+//     });
+// }
+
+
+
+
+//   function sendEmailNotification(name, email) {
+//     const mailOptions = {
+//       from: 'atraxgroup2024@gmail.com',
+//       to: email,
+//       subject: 'Visitor Sign-In Notification',
+//       text: `Hello Visitor ${name} has signed in.`
+//     };
   
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error('Error sending email:', error);
-      } else {
-        console.log('Email sent:', info.response);
-      }
-    });
-  }
+//     transporter.sendMail(mailOptions, (error, info) => {
+//       if (error) {
+//         console.error('Error sending email:', error);
+//       } else {
+//         console.log('Email sent:', info.response);
+//       }
+//     });
+//   }
 
-// about page
-// app.get('/about', function(req, res) {
-//   res.render('pages/about');
-// });
+
+// SENDING MAIL TO EMPLOYEES ENDS
 
 app.listen(4000);
 console.log('Server is listening on port 4000')

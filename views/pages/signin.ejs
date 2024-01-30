@@ -17,7 +17,7 @@
                     <img class="covid-image mb-5" src="images/Atrax-Logo.png">
                     <h2 class="fs-2 mb-3">Visitor's Form</h2>
                     <p class="fs-8" style="font-size: 20px; text-align: center; color: #0093d0;">Please complete the form to Sign In</p>
-                    <a href="/" class="btn btn-warning rounded-pill w-50 p-3 mt-3 fs-6" type="button"> Go Back </a>
+                    <a href="/" class="btn btn-warning rounded-pill w-50 p-3 mt-3 fs-6 text-light" type="button"> Go Back </a>
                     </div>
                 </div>
                 <!-- FORMS -->
@@ -167,7 +167,27 @@
                 .catch(error => console.error("Error fetching autocomplete data:", error));
         }
     </script> -->
+
+    <!-- <script>
+        getEmployeeEmailById(employee_id)
+            .then(email => {
+                if (email) {
+                    sendEmailNotification(name, email);
+                } else {
+                    console.log('Employee with the provided ID not found');
+                }
+                console.log('Visitor data inserted successfully');
+                res.redirect('/');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                return res.status(500).send(`Error: ${error.message}`);
+            });
+        
+        </script> -->
+        
 <script src="js/jquery.min.js"></script>
 <script src="js/script.js"></script>
+
 </body>
 </html>

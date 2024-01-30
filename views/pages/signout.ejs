@@ -10,9 +10,73 @@
             <h5 class="card-title">Please search your name to sign out</h5>
             <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
             <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+
+
+            <section class="table-signout mt-3">
+                <table id="example" class="table table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>S No.</th>
+                            <th>Name</th>
+                            <th>Checked In Time</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% visitors.forEach(function(visitor, index) { %>
+                            <tr>
+                                <td><%= index + 1 %></td>
+                                <td><%= visitor.name %></td>
+                                <td><%- visitor.checkin_time.toLocaleString('en-GB', { timeZone: 'UTC' })%> </td>
+                                <td><button type="submit" class="btn btn-danger btn-sign-out">Sign Out</button></td>
+                            </tr>
+                            <!-- <li>Name: <%= visitor.name %>, Visit Time: <%= visitor.visit_time %></li> -->
+                        <% }); %>
+                    </tbody>
+                </table>
+            </section>
+            
             </div>
         </div>
+        <a href="/" class="btn btn-warning rounded-pill w-20 p-3 mt-3 fs-6 text-light" type="button"> Go Back </a>
     </div>
+
+    <%- include('../partials/footer'); %>
+
+<!-- Include this script in your HTML file -->
+<script>
+   // Handle the click event of the "Sign Out" button
+document.addEventListener('DOMContentLoaded', function() {
+    var signOutButtons = document.querySelectorAll('.btn-sign-out');
+    signOutButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var id = button.getAttribute('data-visitor-id');
+            signOutVisitor(id, button);
+        });
+    });
+
+    // Function to send AJAX request to sign out the visitor
+    function signOutVisitor(id, button) {
+        // Send AJAX request to the server
+        fetch('/signout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: id })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            // Remove the visitor entry from the front-end list
+            var row = button.closest('tr'); // Find the parent row
+            row.remove(); // Remove the row from the table
+        })
+        .catch(error => console.error('Error:', error));
+    }
+});
+
+</script>
 </body>
 
 </html>
