@@ -17,6 +17,8 @@
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Visiting Employee</th>
+                        <th>Checked In</th>
+                        <th>Checked Out</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -31,6 +33,8 @@
                                 <td><%- visitor.email %></td>
                                 <td><%- visitor.phone %></td>
                                 <td><%- visitor.employee_id %></td>
+                                <td><%- visitor.checkin_time.toLocaleString('en-GB', { timeZone: 'UTC' }) %></td>
+                                <td><%- visitor.checkout_time.toLocaleString('en-GB', { timeZone: 'UTC' }) %></td>
                                 <td><button class="btn btn-danger">Sign Out</button></td>
                             </tr>
                         <% }); %>

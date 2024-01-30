@@ -115,9 +115,12 @@ $(document).ready(function () {
     });
 });
 
+//
 const employeeSearchInput = document.getElementById("employeeSearch");
 const employeeSuggestionsList = document.getElementById("employeeSuggestionsList");
 const visitingEmployeeIdInput = document.getElementById("employee_id");
+const visitingEmployeeEmailInput = document.getElementById("employee_email");
+
 let employeeSuggestions = []; // Initialize an array to store employee suggestions
 
 employeeSearchInput.addEventListener("input", debounce(handleEmployeeSearch, 300));
@@ -138,6 +141,8 @@ function handleEmployeeSearch() {
     if (searchQuery.length === 0) {
         employeeSuggestionsList.innerHTML = '';
         visitingEmployeeIdInput.value = ''; // Clear the hidden input value
+        visitingEmployeeEmailInput.value = ''; // Clear the hidden input value
+
         return;
     }
 
@@ -164,6 +169,7 @@ employeeSearchInput.addEventListener("blur", () => {
     if (selectedEmployee) {
         // Set the value in the hidden input
         visitingEmployeeIdInput.value = selectedEmployee.id;
+        visitingEmployeeEmailInput.value = selectedEmployee.email;
     } else {
         // Handle the case when the selected employee is not found
         console.error("Selected employee not found");

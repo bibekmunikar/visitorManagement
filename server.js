@@ -59,9 +59,21 @@ const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: 'atraxgroup2024@gmail.com',
-      pass: 'atrax@2024'
-    }
+      pass: 'wxuo wuwr qzxg hbxv'
+    },
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+
   });
+  const SENDMAIL = async (mailDetails, callback) => {
+    try {
+      const info = await transporter.sendMail(mailDetails)
+      callback(info);
+    } catch (error) {
+      console.log(error);
+    } 
+  };
 
 // Front end main page
 app.get('/', function(req, res) {
@@ -89,7 +101,7 @@ app.get("/autocomplete", (req, res) => {
         return res.status(400).json({ error: "Missing search query" });
     }
 
-    const sql = "SELECT id, full_name FROM employees WHERE full_name LIKE ?";
+    const sql = "SELECT id, full_name, email FROM employees WHERE full_name LIKE ?";
     const params = [`%${searchQuery}%`];
 
     conn.query(sql, params, (err, results) => {
@@ -103,8 +115,8 @@ app.get("/autocomplete", (req, res) => {
 });
 
 app.post('/checkin', (req, res) => {
-    const { name, from, email, phone, employee_id, q_2 } = req.body;
-
+    const { name, from, email, employee_email, phone, employee_id, q_2 } = req.body;
+    console.log(email);
     // Validate required fields
     if (!name || !phone || !employee_id || employee_id === '') {
         return res.status(400).send('Name, phone, and visiting employee are required');
@@ -123,25 +135,36 @@ app.post('/checkin', (req, res) => {
         }
 
         // Assuming the 'employees' table has columns: id, email
-        const employeeSql = 'SELECT id, email FROM employees WHERE id = ?';
-        conn.query(employeeSql, [employee_id], (employeeErr, employeeResult) => {
-            if (employeeErr) {
-                console.error('Error fetching employee data:', employeeErr);
-                return res.status(500).send(`Error fetching employee data: ${employeeErr.message}`);
-            }
+        // const employeeSql = 'SELECT id, email FROM employees WHERE id = ?';
+        // conn.query(employeeSql, [employee_id], (employeeErr, employeeResult) => {
+        //     if (employeeErr) {
+        //         console.error('Error fetching employee data:', employeeErr);
+        //         return res.status(500).send(`Error fetching employee data: ${employeeErr.message}`);
+        //     }
 
             // Fetch employee email based on employee_id
             // const employeeEmail = getEmployeeEmailById(employee_id); 
 
             // Send email notification
-            // sendEmailNotification(name, employeeEmail);
-
+            // sendEmailNotification(name, email);
+            const mailOptions = {
+                from: 'atraxgroup2024@gmail.com',
+                to: employee_email,
+                subject: 'Visitor Sign-In Notification',
+                html: `<strong>Hello Visitor ${name} ${from} ${email}  has signed in.</strong>`
+              };
+          
+              // send mail with defined transport object and mail options
+              SENDMAIL(mailOptions, (info) => {
+                  console.log("Email sent successfully");
+                  console.log("MESSAGE ID: ", info.messageId);
+              });
             // const selectedEmployee = employeeResult[0];
 
         console.log('Visitor data inserted successfully');
         res.redirect('/');
 
-        });
+        // });
     });
 });
 
@@ -610,40 +633,46 @@ app.get('/404', function(req, res) {
 
 
 // Function to retrieve employee email by ID
-// function getEmployeeEmailById(employeeId, callback) {
-//     conn.query('SELECT email FROM employees WHERE id = ?', [employeeId], (err, result) => {
-//         if (err) {
-//             console.error('Error fetching employee email:', err);
-//             callback(err, null); // Pass error to callback
-//         } else {
-//             if (result.length > 0) {
-//                 callback(null, result[0].email); // Pass email to callback
-//             } else {
-//                 callback(null, null); // Pass null if employee not found
-//             }
-//         }
-//     });
-// }
+function getEmployeeEmailById(employeeId, callback) {
+    conn.query('SELECT email FROM employees WHERE id = ?', [employeeId], (err, result) => {
+        if (err) {
+            console.error('Error fetching employee email:', err);
+            callback(err, null); // Pass error to callback
+        } else {
+            if (result.length > 0) {
+                callback(null, result[0].email); // Pass email to callback
+            } else {
+                callback(null, null); // Pass null if employee not found
+            }
+        }
+    });
+}
 
 
 
 
-//   function sendEmailNotification(name, email) {
-//     const mailOptions = {
-//       from: 'atraxgroup2024@gmail.com',
-//       to: email,
-//       subject: 'Visitor Sign-In Notification',
-//       text: `Hello Visitor ${name} has signed in.`
-//     };
-  
-//     transporter.sendMail(mailOptions, (error, info) => {
-//       if (error) {
-//         console.error('Error sending email:', error);
-//       } else {
-//         console.log('Email sent:', info.response);
-//       }
-//     });
-//   }
+  function sendEmailNotification(name, email) {
+    const mailOptions = {
+      from: 'atraxgroup2024@gmail.com',
+      to: email,
+      subject: 'Visitor Sign-In Notification',
+      text: `Hello Visitor ${name} has signed in.`
+    };
+
+    // send mail with defined transport object and mail options
+    SENDMAIL(mailOptions, (info) => {
+        console.log("Email sent successfully");
+        console.log("MESSAGE ID: ", info.messageId);
+    });
+    // transporter.sendMail(mailOptions, (error, info) => {
+    //   if (error) {
+    //     console.error('Error sending email:', error);
+    //   } else {
+    //     console.log('Email sent:', info.response);
+    //   }
+    // });
+
+  }
 
 
 // SENDING MAIL TO EMPLOYEES ENDS
